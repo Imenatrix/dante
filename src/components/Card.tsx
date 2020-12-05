@@ -5,7 +5,8 @@ import {
 	StyleSheet,
 	Text,
 	TextInput,
-	View
+	View,
+	Dimensions
 } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
@@ -39,7 +40,9 @@ export default class Card extends React.Component {
 const styles = StyleSheet.create({
 	container : {
 		flex : 1,
-		margin : 10,
+		width : Dimensions.get('window').width - 40,
+		marginVertical : 10,
+		marginLeft : 10,
 		borderRadius : 5,
 		overflow : 'hidden'
 	},

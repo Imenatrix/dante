@@ -12,6 +12,7 @@ interface Props {
 interface State {
 	backgroundOpacity : Animated.Value
 	bodyFlex : Animated.Value
+	zIndex : number
 }
 
 export default class SideMenu extends React.Component<Props, State> {
@@ -20,11 +21,15 @@ export default class SideMenu extends React.Component<Props, State> {
 		super(props)
 		this.state = {
 			backgroundOpacity : this.props.open ? new Animated.Value(0.4) : new Animated.Value(0),
-			bodyFlex : this.props.open ? new Animated.Value(3) : new Animated.Value(0)
+			bodyFlex : this.props.open ? new Animated.Value(3) : new Animated.Value(0),
+			zIndex : this.props.open ? 1 : 0
 		}
 	}
 
 	open = () => {
+		this.setState({
+			zIndex : 1
+		})
 		Animated.timing(this.state.bodyFlex, {
 			toValue : 3,
 			duration : 300,
@@ -47,26 +52,34 @@ export default class SideMenu extends React.Component<Props, State> {
 			toValue : 0,
 			duration : 300,
 			useNativeDriver : false
-		}).start()
+		}).start(() => this.setState({
+			zIndex : 0
+		}))
 	}
 
 	componentDidUpdate(prevProps : Props) {
-		if (prevProps.open) {
-			this.open()
-		}
-		else {
-			this.close()
+		if (prevProps.open != this.props.open){
+			if (this.props.open) {
+				this.open()
+			}
+			else {
+				this.close()
+			}
 		}
 	}
 
 	render() {
 
+		const bodyFlex = this.state.bodyFlex
+		const backgroundOpacity = this.state.backgroundOpacity
+		const zIndex = this.state.zIndex
+
 		return (
-			<View style={styles.container}>
-				<Animated.View style={[styles.body, {flex : this.state.bodyFlex}]}>
+			<View style={[styles.container, {zIndex : zIndex, elevation : zIndex}]}>
+				<Animated.View style={[styles.body, {flex : bodyFlex}]}>
 					{this.props.children}
 				</Animated.View>
-				<Animated.View style={[styles.background, {opacity : this.state.backgroundOpacity}]}/>
+				<Animated.View style={[styles.background, {opacity : backgroundOpacity}]}/>
 			</View>
 		)
 	}
@@ -79,8 +92,6 @@ const styles = StyleSheet.create({
 		width : '100%',
 		height : '100%',
 		flexDirection : 'row',
-		zIndex : 1,
-		elevation : 1
 	},
 	body : {
 		backgroundColor : 'white'

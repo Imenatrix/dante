@@ -24,6 +24,7 @@ export default class TaskPod extends React.Component<Props> {
 
 const styles = StyleSheet.create({
 	container : {
+		margin : 5,
 		flexDirection : 'row',
 		alignItems : 'center',
 		justifyContent : 'space-between',

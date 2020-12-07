@@ -11,6 +11,7 @@ import CardBox from 'src/components/CardBox'
 import SideMenu from 'src/components/SideMenu'
 import CardBoxPod from 'src/components/CardBoxPod'
 import NewPod from 'src/components/NewPod'
+import NewCard from 'src/components/NewCard'
 
 const cardBoxes = [
 	{
@@ -222,6 +223,7 @@ class App extends React.Component<{}, State> {
 							<NewPod/>
 						</Card>
 					))}
+					<NewCard/>
 				</CardBox>
 				<SideMenu onBackgroundPress={this.toggleMenu} open={isSideMenuOpen}>
 					{cardBoxes.map((cardBox) => (

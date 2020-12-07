@@ -88,6 +88,7 @@ const cardBoxes = [
 
 interface State {
 	isSideMenuOpen : boolean
+	selectedCardBox : number
 }
 
 class App extends React.Component<{}, State> {
@@ -98,6 +99,7 @@ class App extends React.Component<{}, State> {
 		super(props)
 		this.backHandler = undefined
 		this.state = {
+			selectedCardBox : 1,
 			isSideMenuOpen : false
 		}
 	}
@@ -127,11 +129,12 @@ class App extends React.Component<{}, State> {
 	render() {
 
 		const isSideMenuOpen = this.state.isSideMenuOpen
+		const cardBox = cardBoxes.find(x => x.id == this.state.selectedCardBox)
 
 		return (
 			<View style={{flex : 1}}>
-				<CardBox title={cardBoxes[0].title} onBtnSideMenuPress={this.toggleMenu}>
-					{cardBoxes[0].cards.map((card) => (
+				<CardBox title={cardBox.title} onBtnSideMenuPress={this.toggleMenu}>
+					{cardBox.cards.map((card) => (
 						<Card key={card.id} title={card.title}>
 							{card.tasks.map((task) => (
 								<TaskPod key={task.id} title={task.title} counter={<Counter value={task.timeFlex}/>}/>

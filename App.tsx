@@ -1,5 +1,7 @@
 import React from 'react'
 import {
+	BackHandler,
+	NativeEventSubscription,
 	View
 } from 'react-native'
 import Counter from 'src/components/Counter'
@@ -14,11 +16,30 @@ interface State {
 
 class App extends React.Component<{}, State> {
 
+	backHandler? : NativeEventSubscription
+
 	constructor(props : {}) {
 		super(props)
+		this.backHandler = undefined
 		this.state = {
 			open : false
-		}	
+		}
+	}
+
+	componentDidMount() {
+		this.backHandler = BackHandler.addEventListener('hardwareBackPress', this.backAction)
+	}
+
+	componentWillUnmount() {
+		this.backHandler?.remove()
+	}
+
+	backAction = () => {
+		if (this.state.open) {
+			this.toggleMenu()
+			return true
+		}
+		return false
 	}
 
 	toggleMenu = () => {

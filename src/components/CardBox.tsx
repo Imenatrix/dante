@@ -5,17 +5,22 @@ import {
 	StyleSheet,
 	View,
 	Pressable,
-	TextInput
+	TextInput,
+	GestureResponderEvent
 } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-export default class CardBox extends React.Component {
+interface Props {
+	onBtnSideMenuPress? : (event : GestureResponderEvent) => void
+}
+
+export default class CardBox extends React.Component<Props> {
 
 	render() {
 		return (
 			<View style={styles.container}>				
 				<View style={styles.header}>
-					<Pressable style={styles.btnSideMenu}>
+					<Pressable onPress={this.props.onBtnSideMenuPress} style={styles.btnSideMenu}>
 						<Icon style={styles.iconBtnSideMenu} name='menu'/>
 					</Pressable>
 					<TextInput style={styles.txtTitle}>

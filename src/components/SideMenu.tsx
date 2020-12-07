@@ -2,17 +2,21 @@ import React from 'react'
 import {
 	StyleSheet,
 	View,
-	Animated
+	Animated,
+	Pressable,
+	GestureResponderEvent
 } from 'react-native'
 
 interface Props {
 	open? : boolean
+	onBackgroundPress? : (event : GestureResponderEvent) => void,
 }
 
 interface State {
 	backgroundOpacity : Animated.Value
 	bodyFlex : Animated.Value
-	zIndex : number
+	zIndex : number,
+	open : boolean
 }
 
 export default class SideMenu extends React.Component<Props, State> {
@@ -22,13 +26,14 @@ export default class SideMenu extends React.Component<Props, State> {
 		this.state = {
 			backgroundOpacity : this.props.open ? new Animated.Value(0.4) : new Animated.Value(0),
 			bodyFlex : this.props.open ? new Animated.Value(3) : new Animated.Value(0),
-			zIndex : this.props.open ? 1 : 0
+			zIndex : this.props.open ? 1 : 0,
+			open : this.props.open != undefined ? this.props.open : false
 		}
 	}
 
 	open = () => {
 		this.setState({
-			zIndex : 1
+			open : true
 		})
 		Animated.timing(this.state.bodyFlex, {
 			toValue : 3,
@@ -52,9 +57,11 @@ export default class SideMenu extends React.Component<Props, State> {
 			toValue : 0,
 			duration : 300,
 			useNativeDriver : false
-		}).start(() => this.setState({
-			zIndex : 0
-		}))
+		}).start(() => {
+			this.setState({
+				open : false
+			})
+		})
 	}
 
 	componentDidUpdate(prevProps : Props) {
@@ -73,13 +80,18 @@ export default class SideMenu extends React.Component<Props, State> {
 		const bodyFlex = this.state.bodyFlex
 		const backgroundOpacity = this.state.backgroundOpacity
 		const zIndex = this.state.zIndex
+		const onBackgroundPress = this.props.onBackgroundPress
 
 		return (
-			<View style={[styles.container, {zIndex : zIndex, elevation : zIndex}]}>
-				<Animated.View style={[styles.body, {flex : bodyFlex}]}>
-					{this.props.children}
-				</Animated.View>
-				<Animated.View style={[styles.background, {opacity : backgroundOpacity}]}/>
+			<View style={styles.container}>
+				{this.state.open && <>
+					<Animated.View style={[styles.body, {flex : bodyFlex}]}>
+						{this.props.children}
+					</Animated.View>
+					<Animated.View style={[styles.background, {opacity : backgroundOpacity}]}>
+						<Pressable onPress={onBackgroundPress} style={styles.backgroundPressable}/>
+					</Animated.View>
+				</>}
 			</View>
 		)
 	}
@@ -91,7 +103,7 @@ const styles = StyleSheet.create({
 		position : 'absolute',
 		width : '100%',
 		height : '100%',
-		flexDirection : 'row',
+		flexDirection : 'row'
 	},
 	body : {
 		backgroundColor : 'white'
@@ -99,5 +111,8 @@ const styles = StyleSheet.create({
 	background : {
 		flex : 1,
 		backgroundColor : 'black',
+	},
+	backgroundPressable : {
+		flex : 1
 	}
 })

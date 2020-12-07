@@ -8,13 +8,29 @@ import Card from 'src/components/Card'
 import CardBox from 'src/components/CardBox'
 import SideMenu from 'src/components/SideMenu'
 
-class App extends React.Component {
+interface State {
+	open : boolean
+}
+
+class App extends React.Component<{}, State> {
+
+	constructor(props : {}) {
+		super(props)
+		this.state = {
+			open : false
+		}	
+	}
+
+	toggleMenu = () => {
+		this.setState((state) => ({
+			open : !state.open
+		}))
+	}
 
 	render() {
 		return (
 			<View style={{flex : 1}}>
-				<SideMenu/>
-				<CardBox>
+				<CardBox onBtnSideMenuPress={this.toggleMenu}>
 					<Card>
 						<TaskPod counter={<Counter/>}/>
 						<TaskPod counter={<Counter/>}/>
@@ -52,6 +68,7 @@ class App extends React.Component {
 						<TaskPod counter={<Counter/>}/>
 					</Card>
 				</CardBox>
+				<SideMenu onBackgroundPress={this.toggleMenu} open={this.state.open}/>
 			</View>
 		)
 	}

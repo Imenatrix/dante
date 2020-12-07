@@ -10,6 +10,72 @@ import Card from 'src/components/Card'
 import CardBox from 'src/components/CardBox'
 import SideMenu from 'src/components/SideMenu'
 
+const cardBoxes = [
+	{
+		id : 1,
+		name : 'Week',
+		cards : [
+			{
+				id : 1,
+				name : 'Monday',
+				endTime : new Date(),
+				tasks : [
+					{
+						name : 'Code',
+						timeFlex : 1
+					},
+					{
+						name : 'Game',
+						timeFlex : 1
+					},
+					{
+						name : 'Read',
+						timeFlex : 1
+					}
+				]
+			},
+			{
+				id : 2,
+				name : 'Tuesday',
+				endTime : new Date(),
+				tasks : [
+					{
+						name : 'Code',
+						timeFlex : 1
+					},
+					{
+						name : 'Game',
+						timeFlex : 1
+					},
+					{
+						name : 'Read',
+						timeFlex : 1
+					}
+				]
+			},
+			{
+				id : 3,
+				name : 'Wednesday',
+				endTime : new Date(),
+				tasks : [
+					{
+						name : 'Code',
+						timeFlex : 1
+					},
+					{
+						name : 'Game',
+						timeFlex : 1
+					},
+					{
+						name : 'Read',
+						timeFlex : 1
+					}
+				]
+			}
+		]
+	}
+]
+
 interface State {
 	open : boolean
 }

@@ -87,7 +87,7 @@ const cardBoxes = [
 ]
 
 interface State {
-	open : boolean
+	isSideMenuOpen : boolean
 }
 
 class App extends React.Component<{}, State> {
@@ -98,7 +98,7 @@ class App extends React.Component<{}, State> {
 		super(props)
 		this.backHandler = undefined
 		this.state = {
-			open : false
+			isSideMenuOpen : false
 		}
 	}
 
@@ -111,7 +111,7 @@ class App extends React.Component<{}, State> {
 	}
 
 	backAction = () => {
-		if (this.state.open) {
+		if (this.state.isSideMenuOpen) {
 			this.toggleMenu()
 			return true
 		}
@@ -120,11 +120,14 @@ class App extends React.Component<{}, State> {
 
 	toggleMenu = () => {
 		this.setState((state) => ({
-			open : !state.open
+			isSideMenuOpen : !state.isSideMenuOpen
 		}))
 	}
 
 	render() {
+
+		const isSideMenuOpen = this.state.isSideMenuOpen
+
 		return (
 			<View style={{flex : 1}}>
 				<CardBox title={cardBoxes[0].title} onBtnSideMenuPress={this.toggleMenu}>
@@ -136,7 +139,7 @@ class App extends React.Component<{}, State> {
 						</Card>
 					))}
 				</CardBox>
-				<SideMenu onBackgroundPress={this.toggleMenu} open={this.state.open}>
+				<SideMenu onBackgroundPress={this.toggleMenu} open={isSideMenuOpen}>
 					{cardBoxes.map((cardBox) => (
 						<CardBoxPod key={cardBox.id} title={cardBox.title}/>
 					))}

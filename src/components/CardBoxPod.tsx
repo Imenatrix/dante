@@ -5,12 +5,19 @@ import {
 	StyleSheet
 } from 'react-native'
 
-export default class CardBoxPod extends React.Component {
+interface Props {
+	title : string
+}
+
+export default class CardBoxPod extends React.Component<Props> {
 
 	render() {
+
+		const title = this.props.title
+
 		return (
 			<View style={styles.container}>
-				<Text style={styles.txtTitle}>Week</Text>
+				<Text style={styles.txtTitle}>{title}</Text>
 			</View>
 		)
 	}

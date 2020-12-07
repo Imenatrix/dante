@@ -166,7 +166,9 @@ class App extends React.Component<{}, State> {
 					</Card>
 				</CardBox>
 				<SideMenu onBackgroundPress={this.toggleMenu} open={this.state.open}>
-					<CardBoxPod/>
+					{cardBoxes.map((cardBox) => (
+						<CardBoxPod title={cardBox.title}/>
+					))}
 				</SideMenu>
 			</View>
 		)

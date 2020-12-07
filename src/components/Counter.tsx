@@ -7,16 +7,23 @@ import {
 } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-export default class Counter extends React.Component {
+interface Props {
+	value : number
+}
+
+export default class Counter extends React.Component<Props> {
 
 	render() {
+
+		const value = this.props.value
+
 		return (
 			<View style={styles.container}>
 				<Pressable style={styles.btn}>
 					<Icon style={styles.iconBtn} name='remove'/>
 				</Pressable>
 				<Text style={styles.txtValue}>
-					0
+					{value}
 				</Text>
 				<Pressable style={styles.btn}>
 					<Icon style={styles.iconBtn} name='add'/>

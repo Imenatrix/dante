@@ -6,15 +6,19 @@ import {
 } from 'react-native'
 
 interface Props {
-	counter : Element
+	counter : Element,
+	title : string
 }
 
 export default class TaskPod extends React.Component<Props> {
 
 	render() {
+
+		const title = this.props.title
+
 		return (
 			<View style={styles.container}>
-				<TextInput style={styles.txtTitle}>Game</TextInput>
+				<TextInput style={styles.txtTitle}>{title}</TextInput>
 				{this.props.counter}
 			</View>
 		)

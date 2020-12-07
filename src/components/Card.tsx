@@ -10,9 +10,16 @@ import {
 } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-export default class Card extends React.Component {
+interface Props {
+	title : string
+}
+
+export default class Card extends React.Component<Props> {
 
 	render() {
+
+		const title = this.props.title
+
 		return (
 			<View style={styles.container}>
 				<View style={styles.header}>
@@ -21,7 +28,7 @@ export default class Card extends React.Component {
 					</Pressable>
 					<View style={styles.headerText}>
 						<TextInput style={styles.txtTitle}>
-							Monday
+							{title}
 						</TextInput>
 						<Text style={styles.txtEndTime}>
 							Ends at: 23:00

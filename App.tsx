@@ -128,42 +128,13 @@ class App extends React.Component<{}, State> {
 		return (
 			<View style={{flex : 1}}>
 				<CardBox onBtnSideMenuPress={this.toggleMenu}>
-					<Card>
-						<TaskPod counter={<Counter/>}/>
-						<TaskPod counter={<Counter/>}/>
-						<TaskPod counter={<Counter/>}/>
-						<TaskPod counter={<Counter/>}/>
-						<TaskPod counter={<Counter/>}/>
-						<TaskPod counter={<Counter/>}/>
-						<TaskPod counter={<Counter/>}/>
-						<TaskPod counter={<Counter/>}/>
-						<TaskPod counter={<Counter/>}/>
-						<TaskPod counter={<Counter/>}/>
-					</Card>
-					<Card>
-						<TaskPod counter={<Counter/>}/>
-						<TaskPod counter={<Counter/>}/>
-						<TaskPod counter={<Counter/>}/>
-						<TaskPod counter={<Counter/>}/>
-						<TaskPod counter={<Counter/>}/>
-						<TaskPod counter={<Counter/>}/>
-						<TaskPod counter={<Counter/>}/>
-						<TaskPod counter={<Counter/>}/>
-						<TaskPod counter={<Counter/>}/>
-						<TaskPod counter={<Counter/>}/>
-					</Card>
-					<Card>
-						<TaskPod counter={<Counter/>}/>
-						<TaskPod counter={<Counter/>}/>
-						<TaskPod counter={<Counter/>}/>
-						<TaskPod counter={<Counter/>}/>
-						<TaskPod counter={<Counter/>}/>
-						<TaskPod counter={<Counter/>}/>
-						<TaskPod counter={<Counter/>}/>
-						<TaskPod counter={<Counter/>}/>
-						<TaskPod counter={<Counter/>}/>
-						<TaskPod counter={<Counter/>}/>
-					</Card>
+					{cardBoxes[0].cards.map((card) => (
+						<Card title={card.title}>
+							{card.tasks.map((task) => (
+								<TaskPod title={task.title} counter={<Counter value={task.timeFlex}/>}/>
+							))}
+						</Card>
+					))}
 				</CardBox>
 				<SideMenu onBackgroundPress={this.toggleMenu} open={this.state.open}>
 					{cardBoxes.map((cardBox) => (

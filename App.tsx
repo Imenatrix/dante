@@ -14,65 +14,74 @@ import CardBoxPod from 'src/components/CardBoxPod'
 const cardBoxes = [
 	{
 		id : 1,
-		name : 'Week',
+		title : 'Week',
 		cards : [
 			{
 				id : 1,
-				name : 'Monday',
+				title : 'Monday',
 				endTime : new Date(),
 				tasks : [
 					{
-						name : 'Code',
+						id : 1,
+						title : 'Code',
 						timeFlex : 1
 					},
 					{
-						name : 'Game',
+						id : 2,
+						title : 'Game',
 						timeFlex : 1
 					},
 					{
-						name : 'Read',
-						timeFlex : 1
-					}
-				]
-			},
-			{
-				id : 2,
-				name : 'Tuesday',
-				endTime : new Date(),
-				tasks : [
-					{
-						name : 'Code',
-						timeFlex : 1
-					},
-					{
-						name : 'Game',
-						timeFlex : 1
-					},
-					{
-						name : 'Read',
+						id : 3,
+						title : 'Read',
 						timeFlex : 1
 					}
 				]
 			},
 			{
 				id : 3,
-				name : 'Wednesday',
+				title : 'Tuesday',
 				endTime : new Date(),
 				tasks : [
 					{
-						name : 'Code',
+						id : 1,
+						title : 'Code',
 						timeFlex : 1
 					},
 					{
-						name : 'Game',
+						id : 2,
+						title : 'Game',
 						timeFlex : 1
 					},
 					{
-						name : 'Read',
+						id : 3,
+						title : 'Read',
 						timeFlex : 1
 					}
 				]
-			}
+			},
+			{
+				id : 3,
+				title : 'Wednesday',
+				endTime : new Date(),
+				tasks : [
+					{
+						id : 1,
+						title : 'Code',
+						timeFlex : 1
+					},
+					{
+						id : 2,
+						title : 'Game',
+						timeFlex : 1
+					},
+					{
+						id : 3,
+						title : 'Read',
+						timeFlex : 1
+					}
+				]
+			},
 		]
 	}
 ]

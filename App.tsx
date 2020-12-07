@@ -9,6 +9,7 @@ import TaskPod from 'src/components/TaskPod'
 import Card from 'src/components/Card'
 import CardBox from 'src/components/CardBox'
 import SideMenu from 'src/components/SideMenu'
+import CardBoxPod from 'src/components/CardBoxPod'
 
 const cardBoxes = [
 	{
@@ -155,7 +156,9 @@ class App extends React.Component<{}, State> {
 						<TaskPod counter={<Counter/>}/>
 					</Card>
 				</CardBox>
-				<SideMenu onBackgroundPress={this.toggleMenu} open={this.state.open}/>
+				<SideMenu onBackgroundPress={this.toggleMenu} open={this.state.open}>
+					<CardBoxPod/>
+				</SideMenu>
 			</View>
 		)
 	}

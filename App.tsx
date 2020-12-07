@@ -127,7 +127,7 @@ class App extends React.Component<{}, State> {
 	render() {
 		return (
 			<View style={{flex : 1}}>
-				<CardBox onBtnSideMenuPress={this.toggleMenu}>
+				<CardBox title={cardBoxes[0].title} onBtnSideMenuPress={this.toggleMenu}>
 					{cardBoxes[0].cards.map((card) => (
 						<Card key={card.id} title={card.title}>
 							{card.tasks.map((task) => (

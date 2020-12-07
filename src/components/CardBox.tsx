@@ -11,12 +11,16 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 interface Props {
+	title : string,
 	onBtnSideMenuPress? : (event : GestureResponderEvent) => void
 }
 
 export default class CardBox extends React.Component<Props> {
 
 	render() {
+
+		const title = this.props.title
+
 		return (
 			<View style={styles.container}>				
 				<View style={styles.header}>
@@ -24,7 +28,7 @@ export default class CardBox extends React.Component<Props> {
 						<Icon style={styles.iconBtnSideMenu} name='menu'/>
 					</Pressable>
 					<TextInput style={styles.txtTitle}>
-						Week
+						{title}
 					</TextInput>
 					<Pressable style={styles.btnConfirm}>
 						<Icon style={styles.iconBtnConfirm} name='check'/>

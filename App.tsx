@@ -83,6 +83,78 @@ const cardBoxes = [
 				]
 			},
 		]
+	},
+	{
+		id : 2,
+		title : 'Wook',
+		cards : [
+			{
+				id : 1,
+				title : 'Monday',
+				endTime : new Date(),
+				tasks : [
+					{
+						id : 1,
+						title : 'Code',
+						timeFlex : 1
+					},
+					{
+						id : 2,
+						title : 'Game',
+						timeFlex : 1
+					},
+					{
+						id : 3,
+						title : 'Read',
+						timeFlex : 1
+					}
+				]
+			},
+			{
+				id : 2,
+				title : 'Tuesday',
+				endTime : new Date(),
+				tasks : [
+					{
+						id : 1,
+						title : 'Code',
+						timeFlex : 1
+					},
+					{
+						id : 2,
+						title : 'Game',
+						timeFlex : 1
+					},
+					{
+						id : 3,
+						title : 'Read',
+						timeFlex : 1
+					}
+				]
+			},
+			{
+				id : 3,
+				title : 'Wednesday',
+				endTime : new Date(),
+				tasks : [
+					{
+						id : 1,
+						title : 'Code',
+						timeFlex : 1
+					},
+					{
+						id : 2,
+						title : 'Game',
+						timeFlex : 1
+					},
+					{
+						id : 3,
+						title : 'Read',
+						timeFlex : 1
+					}
+				]
+			},
+		]
 	}
 ]
 
@@ -126,6 +198,13 @@ class App extends React.Component<{}, State> {
 		}))
 	}
 
+	selectCardBox = (id : number) => {
+		this.setState({
+			selectedCardBox : id
+		})
+		this.toggleMenu()
+	}
+
 	render() {
 
 		const isSideMenuOpen = this.state.isSideMenuOpen
@@ -144,7 +223,7 @@ class App extends React.Component<{}, State> {
 				</CardBox>
 				<SideMenu onBackgroundPress={this.toggleMenu} open={isSideMenuOpen}>
 					{cardBoxes.map((cardBox) => (
-						<CardBoxPod key={cardBox.id} title={cardBox.title}/>
+						<CardBoxPod onPress={() => this.selectCardBox(cardBox.id)} key={cardBox.id} title={cardBox.title}/>
 					))}
 				</SideMenu>
 			</View>

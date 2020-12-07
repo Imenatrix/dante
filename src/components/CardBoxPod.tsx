@@ -1,12 +1,14 @@
 import React from 'react'
 import {
-	View,
+	Pressable,
 	Text,
-	StyleSheet
+	StyleSheet,
+	GestureResponderEvent
 } from 'react-native'
 
 interface Props {
-	title : string
+	onPress : (event : GestureResponderEvent) => void
+	title : string,
 }
 
 export default class CardBoxPod extends React.Component<Props> {
@@ -14,11 +16,12 @@ export default class CardBoxPod extends React.Component<Props> {
 	render() {
 
 		const title = this.props.title
+		const onPress = this.props.onPress
 
 		return (
-			<View style={styles.container}>
+			<Pressable onPress={onPress} style={styles.container}>
 				<Text style={styles.txtTitle}>{title}</Text>
-			</View>
+			</Pressable>
 		)
 	}
 

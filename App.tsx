@@ -10,6 +10,7 @@ import Card from 'src/components/Card'
 import CardBox from 'src/components/CardBox'
 import SideMenu from 'src/components/SideMenu'
 import CardBoxPod from 'src/components/CardBoxPod'
+import NewPod from 'src/components/NewPod'
 
 const cardBoxes = [
 	{
@@ -218,6 +219,7 @@ class App extends React.Component<{}, State> {
 							{card.tasks.map((task) => (
 								<TaskPod key={task.id} title={task.title} counter={<Counter value={task.timeFlex}/>}/>
 							))}
+							<NewPod/>
 						</Card>
 					))}
 				</CardBox>
@@ -225,6 +227,7 @@ class App extends React.Component<{}, State> {
 					{cardBoxes.map((cardBox) => (
 						<CardBoxPod onPress={() => this.selectCardBox(cardBox.id)} key={cardBox.id} title={cardBox.title}/>
 					))}
+					<NewPod/>
 				</SideMenu>
 			</View>
 		)

@@ -39,7 +39,7 @@ const cardBoxes = [
 				]
 			},
 			{
-				id : 3,
+				id : 2,
 				title : 'Tuesday',
 				endTime : new Date(),
 				tasks : [
@@ -129,16 +129,16 @@ class App extends React.Component<{}, State> {
 			<View style={{flex : 1}}>
 				<CardBox onBtnSideMenuPress={this.toggleMenu}>
 					{cardBoxes[0].cards.map((card) => (
-						<Card title={card.title}>
+						<Card key={card.id} title={card.title}>
 							{card.tasks.map((task) => (
-								<TaskPod title={task.title} counter={<Counter value={task.timeFlex}/>}/>
+								<TaskPod key={task.id} title={task.title} counter={<Counter value={task.timeFlex}/>}/>
 							))}
 						</Card>
 					))}
 				</CardBox>
 				<SideMenu onBackgroundPress={this.toggleMenu} open={this.state.open}>
 					{cardBoxes.map((cardBox) => (
-						<CardBoxPod title={cardBox.title}/>
+						<CardBoxPod key={cardBox.id} title={cardBox.title}/>
 					))}
 				</SideMenu>
 			</View>

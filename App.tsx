@@ -66,6 +66,18 @@ class App extends React.Component<{}, State> {
 		this.toggleMenu()
 	}
 
+	addCardBox = () => {
+		this.setState((state) => {
+			const cardBoxes = state.cardBoxes
+			const id = cardBoxes.map(cardBox => cardBox.id).sort().reverse()[0] + 1
+			console.log(id)
+			cardBoxes.push(new CardBoxEntity(id))
+			return {
+				cardBoxes : cardBoxes
+			}
+		})
+	}
+
 	render() {
 
 		const isSideMenuOpen = this.state.isSideMenuOpen
@@ -91,7 +103,7 @@ class App extends React.Component<{}, State> {
 					{cardBoxes.map((cardBox) => (
 						<CardBoxPod onPress={() => this.selectCardBox(cardBox.id)} key={cardBox.id} title={cardBox.title}/>
 					))}
-					<NewPod/>
+					<NewPod onPress={this.addCardBox}/>
 				</SideMenu>
 			</View>
 		)

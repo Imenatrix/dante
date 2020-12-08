@@ -1,15 +1,23 @@
 import React from 'react'
 import {
+	GestureResponderEvent,
 	Pressable,
 	StyleSheet
 } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-export default class NewPod extends React.Component {
+interface Props {
+	onPress? : (event : GestureResponderEvent) => void
+}
+
+export default class NewPod extends React.Component<Props> {
 
 	render() {
+
+		const onPress = this.props.onPress
+
 		return (
-			<Pressable style={styles.container}>
+			<Pressable onPress={onPress} style={styles.container}>
 				<Icon style={styles.icon} name='add'/>
 			</Pressable>
 		)

@@ -5,6 +5,8 @@ export default class Task {
 
 	constructor(id : number) {
 		this.id = id
+		this.title = ''
+		this.timeFlex = 1
 	}
 
 }

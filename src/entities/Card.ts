@@ -7,6 +7,9 @@ export default class Card {
 
 	constructor(id : number) {
 		this.id = id
+		this.title = ''
+		this.tasks = []
+		this.endTime = new Date()
 	}
 
 	addtask() {

@@ -2,6 +2,7 @@ import Task from './Task'
 export default class Card {
 	id : number
 	title : string
+	endTime : Date
 	tasks : Array<Task>
 
 	constructor(id : number) {

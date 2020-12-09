@@ -46,12 +46,13 @@ const App : React.FC = () => {
 
 	function addCardBox() {
 		const id = cardBoxes.map((cardBox : any) => cardBox.id).sort().reverse()[0] + 1
-		cardBoxes.push({
-			id : 1,
+		const newCardBoxes = [...cardBoxes]
+		newCardBoxes.push({
+			id : id,
 			title : 'Wook',
 			cards : []
 		})
-		setCardBoxes(cardBoxes)
+		setCardBoxes(newCardBoxes)
 	}
 
 	const cardBox = cardBoxes.find(x => x.id == selectedCardBox)

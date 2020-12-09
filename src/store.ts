@@ -1,8 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
-import cardBoxesReducer from 'src/reducers/cardBoxesSlice'
+import rootReducer from 'src/reducers'
 
 export default configureStore({
-	reducer : {
-		cardBoxes : cardBoxesReducer
-	}
+	reducer : rootReducer
 })

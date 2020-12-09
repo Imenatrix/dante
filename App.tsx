@@ -11,7 +11,6 @@ import SideMenu from 'src/components/SideMenu'
 import CardBoxPod from 'src/components/CardBoxPod'
 import NewPod from 'src/components/NewPod'
 import NewCard from 'src/components/NewCard'
-import CardBoxEntity from 'src/entities/CardBox'
 
 const App : React.FC = () => {
 

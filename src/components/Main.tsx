@@ -1,8 +1,20 @@
-import React, { useEffect, useState } from 'react'
+import React, {
+	useEffect,
+	useState
+} from 'react'
+
 import {
 	BackHandler,
 	View
 } from 'react-native'
+
+import {
+	useDispatch,
+	useSelector,
+} from 'react-redux'
+
+import { RootState } from 'src/reducers'
+import { addCardBox } from 'src/reducers/cardBoxesSlice'
 import Counter from 'src/components/Counter'
 import TaskPod from 'src/components/TaskPod'
 import Card from 'src/components/Card'
@@ -14,13 +26,11 @@ import NewCard from 'src/components/NewCard'
 
 const Main : React.FC = () => {
 
+	const dispatch = useDispatch()
+
 	const [isSideMenuOpen, setIsSideMenuOpen] = useState(false)
 	const [selectedCardBox, setSelectedCardBox] = useState(0)
-	const [cardBoxes, setCardBoxes] = useState([{
-		id : 0,
-		title : 'Week',
-		cards : []
-	}])
+	const cardBoxes = useSelector((store : RootState) => store.cardBoxes)
 
 	useEffect(() => {
 		const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction)
@@ -44,17 +54,6 @@ const Main : React.FC = () => {
 		toggleMenu()
 	}
 
-	function addCardBox() {
-		const id = cardBoxes.map((cardBox : any) => cardBox.id).sort().reverse()[0] + 1
-		const newCardBoxes = [...cardBoxes]
-		newCardBoxes.push({
-			id : id,
-			title : 'Wook',
-			cards : []
-		})
-		setCardBoxes(newCardBoxes)
-	}
-
 	const cardBox = cardBoxes.find(x => x.id == selectedCardBox)
 
 	return (
@@ -76,7 +75,7 @@ const Main : React.FC = () => {
 				{cardBoxes.map((cardBox) => (
 					<CardBoxPod onPress={() => selectCardBox(cardBox.id)} key={cardBox.id} title={cardBox.title}/>
 				))}
-				<NewPod onPress={addCardBox}/>
+				<NewPod onPress={() => dispatch(addCardBox())}/>
 			</SideMenu>
 		</View>
 	)

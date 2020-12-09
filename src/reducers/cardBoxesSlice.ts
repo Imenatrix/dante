@@ -5,7 +5,7 @@ export const cardBoxesSlice = createSlice({
 	initialState : {
 		cardBoxes : [{
 			id : 0,
-			title : 'coiso',
+			title : 'Week',
 			cards : []
 		}]
 	},

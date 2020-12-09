@@ -1,7 +1,6 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
 	BackHandler,
-	NativeEventSubscription,
 	View
 } from 'react-native'
 import Counter from 'src/components/Counter'
@@ -14,100 +13,73 @@ import NewPod from 'src/components/NewPod'
 import NewCard from 'src/components/NewCard'
 import CardBoxEntity from 'src/entities/CardBox'
 
-interface State {
-	isSideMenuOpen : boolean
-	selectedCardBox : number
-	cardBoxes : Array<CardBoxEntity>
-}
+const App : React.FC = () => {
 
-class App extends React.Component<{}, State> {
+	const [isSideMenuOpen, setIsSideMenuOpen] = useState(false)
+	const [selectedCardBox, setSelectedCardBox] = useState(0)
+	const [cardBoxes, setCardBoxes] = useState([{
+		id : 0,
+		title : 'Week',
+		cards : []
+	}])
 
-	backHandler? : NativeEventSubscription
+	useEffect(() => {
+		const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction)
+		return () => backHandler.remove()
+	}, [])
 
-	constructor(props : {}) {
-		super(props)
-		this.backHandler = undefined
-		const cardBox = new CardBoxEntity(0)
-		this.state = {
-			selectedCardBox : 0,
-			isSideMenuOpen : false,
-			cardBoxes : [
-				cardBox
-			]
-		}
-	}
-
-	componentDidMount() {
-		this.backHandler = BackHandler.addEventListener('hardwareBackPress', this.backAction)
-	}
-
-	componentWillUnmount() {
-		this.backHandler?.remove()
-	}
-
-	backAction = () => {
-		if (this.state.isSideMenuOpen) {
-			this.toggleMenu()
+	function backAction() {
+		if (isSideMenuOpen) {
+			toggleMenu()
 			return true
 		}
 		return false
 	}
 
-	toggleMenu = () => {
-		this.setState((state) => ({
-			isSideMenuOpen : !state.isSideMenuOpen
-		}))
+	function toggleMenu() {
+		setIsSideMenuOpen(!isSideMenuOpen)
 	}
 
-	selectCardBox = (id : number) => {
-		this.setState({
-			selectedCardBox : id
+	function selectCardBox(id : number) {
+		setSelectedCardBox(id)
+		toggleMenu()
+	}
+
+	function addCardBox() {
+		const id = cardBoxes.map((cardBox : any) => cardBox.id).sort().reverse()[0] + 1
+		cardBoxes.push({
+			id : 1,
+			title : 'Wook',
+			cards : []
 		})
-		this.toggleMenu()
+		setCardBoxes(cardBoxes)
 	}
 
-	addCardBox = () => {
-		this.setState((state) => {
-			const cardBoxes = state.cardBoxes
-			const id = cardBoxes.map(cardBox => cardBox.id).sort().reverse()[0] + 1
-			console.log(id)
-			cardBoxes.push(new CardBoxEntity(id))
-			return {
-				cardBoxes : cardBoxes
-			}
-		})
-	}
+	const cardBox = cardBoxes.find(x => x.id == selectedCardBox)
 
-	render() {
-
-		const isSideMenuOpen = this.state.isSideMenuOpen
-		const cardBoxes = this.state.cardBoxes
-		const cardBox = cardBoxes.find(x => x.id == this.state.selectedCardBox)
-
-		return (
-			<View style={{flex : 1}}>
-				{cardBox != undefined &&
-					<CardBox title={cardBox.title} onBtnSideMenuPress={this.toggleMenu}>
-						{cardBox.cards.map((card) => (
-							<Card key={card.id} title={card.title}>
-								{card.tasks.map((task) => (
-									<TaskPod key={task.id} title={task.title} counter={<Counter value={task.timeFlex}/>}/>
-								))}
-								<NewPod/>
-							</Card>
-						))}
-						<NewCard/>
-					</CardBox>
-				}
-				<SideMenu onBackgroundPress={this.toggleMenu} open={isSideMenuOpen}>
-					{cardBoxes.map((cardBox) => (
-						<CardBoxPod onPress={() => this.selectCardBox(cardBox.id)} key={cardBox.id} title={cardBox.title}/>
+	return (
+		<View style={{flex : 1}}>
+			{cardBox != undefined &&
+				<CardBox title={cardBox.title} onBtnSideMenuPress={toggleMenu}>
+					{cardBox.cards.map((card) => (
+						<Card key={card.id} title={card.title}>
+							{card.tasks.map((task) => (
+								<TaskPod key={task.id} title={task.title} counter={<Counter value={task.timeFlex}/>}/>
+							))}
+							<NewPod/>
+						</Card>
 					))}
-					<NewPod onPress={this.addCardBox}/>
-				</SideMenu>
-			</View>
-		)
-	}
+					<NewCard/>
+				</CardBox>
+			}
+			<SideMenu onBackgroundPress={toggleMenu} open={isSideMenuOpen}>
+				{cardBoxes.map((cardBox) => (
+					<CardBoxPod onPress={() => selectCardBox(cardBox.id)} key={cardBox.id} title={cardBox.title}/>
+				))}
+				<NewPod onPress={addCardBox}/>
+			</SideMenu>
+		</View>
+	)
 
 }
 

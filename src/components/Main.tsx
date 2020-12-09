@@ -15,13 +15,11 @@ import {
 } from 'react-redux'
 
 import { RootState } from 'src/reducers'
-import { addCardBox } from 'src/reducers/cardBoxesSlice'
 import Counter from 'src/components/Counter'
 import TaskPod from 'src/components/TaskPod'
 import Card from 'src/components/Card'
 import CardBox from 'src/components/CardBox'
 import CardBoxPodDrawer from 'src/components/CardBoxPodDrawer'
-import CardBoxPod from 'src/components/CardBoxPod'
 import NewPod from 'src/components/NewPod'
 import NewCard from 'src/components/NewCard'
 
@@ -72,7 +70,10 @@ const Main : React.FC = () => {
 					<NewCard/>
 				</CardBox>
 			}
-			<CardBoxPodDrawer open={isSideMenuOpen} onBackgroundPress={toggleMenu} onSelect={selectCardBox}/>
+			<CardBoxPodDrawer
+				open={isSideMenuOpen}
+				onSelect={selectCardBox}
+				onBackgroundPress={toggleMenu}/>
 		</View>
 	)
 

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 import {
 	StyleSheet,
 	View,
@@ -19,84 +19,67 @@ interface State {
 	open : boolean
 }
 
-export default class SideMenu extends React.Component<Props, State> {
+const SideMenu : React.FC<Props> = (props) => {
 
-	constructor(props : Props) {
-		super(props)
-		this.state = {
-			backgroundOpacity : this.props.open ? new Animated.Value(0.4) : new Animated.Value(0),
-			bodyFlex : this.props.open ? new Animated.Value(3) : new Animated.Value(0),
-			zIndex : this.props.open ? 1 : 0,
-			open : this.props.open != undefined ? this.props.open : false
-		}
-	}
+	const backgroundOpacity = useRef(props.open ? new Animated.Value(0.4) : new Animated.Value(0)).current
+	const bodyFlex = useRef(props.open ? new Animated.Value(3) : new Animated.Value(0)).current
+	const [zIndex, setZIndex] = useState(props.open ? 1 : 0)
+	const [openn, setOpen] = useState(props.open != undefined ? props.open : false)
 
-	open = () => {
-		this.setState({
-			open : true
-		})
-		Animated.timing(this.state.bodyFlex, {
+	function open() {
+		setOpen(true)
+		Animated.timing(bodyFlex, {
 			toValue : 3,
 			duration : 300,
 			useNativeDriver : false
 		}).start()
-		Animated.timing(this.state.backgroundOpacity, {
+		Animated.timing(backgroundOpacity, {
 			toValue : 0.4,
 			duration : 300,
 			useNativeDriver : false
 		}).start()
 	}
 
-	close = () => {
-		Animated.timing(this.state.bodyFlex, {
+	function close() {
+		Animated.timing(bodyFlex, {
 			toValue : 0,
 			duration : 300,
 			useNativeDriver : false
 		}).start()
-		Animated.timing(this.state.backgroundOpacity, {
+		Animated.timing(backgroundOpacity, {
 			toValue : 0,
 			duration : 300,
 			useNativeDriver : false
-		}).start(() => {
-			this.setState({
-				open : false
-			})
-		})
+		}).start(() => setOpen(false))
 	}
 
-	componentDidUpdate(prevProps : Props) {
-		if (prevProps.open != this.props.open){
-			if (this.props.open) {
-				this.open()
-			}
-			else {
-				this.close()
-			}
+	useEffect(() => {
+		if (props.open) {
+			open()
 		}
-	}
+		else {
+			close()
+		}
+	}, [props.open])
 
-	render() {
+	const onBackgroundPress = props.onBackgroundPress
 
-		const bodyFlex = this.state.bodyFlex
-		const backgroundOpacity = this.state.backgroundOpacity
-		const zIndex = this.state.zIndex
-		const onBackgroundPress = this.props.onBackgroundPress
-
-		return (
-			<View style={styles.container}>
-				{this.state.open && <>
-					<Animated.View style={[styles.body, {flex : bodyFlex}]}>
-						{this.props.children}
-					</Animated.View>
-					<Animated.View style={[styles.background, {opacity : backgroundOpacity}]}>
-						<Pressable onPress={onBackgroundPress} style={styles.backgroundPressable}/>
-					</Animated.View>
-				</>}
-			</View>
-		)
-	}
+	return (
+		<View style={styles.container}>
+			{openn && <>
+				<Animated.View style={[styles.body, {flex : bodyFlex}]}>
+					{props.children}
+				</Animated.View>
+				<Animated.View style={[styles.background, {opacity : backgroundOpacity}]}>
+					<Pressable onPress={onBackgroundPress} style={styles.backgroundPressable}/>
+				</Animated.View>
+			</>}
+		</View>
+	)
 
 }
+
+export default SideMenu
 
 const styles = StyleSheet.create({
 	container : {

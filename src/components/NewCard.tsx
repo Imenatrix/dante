@@ -6,17 +6,17 @@ import {
 } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-export default class NewCard extends React.Component {
+const NewCard : React.FC = () => {
 
-	render() {
-		return (
-			<Pressable style={styles.container}>
-				<Icon style={styles.icon} name='add'/>
-			</Pressable>
-		)
-	}
+	return (
+		<Pressable style={styles.container}>
+			<Icon style={styles.icon} name='add'/>
+		</Pressable>
+	)
 
 }
+
+export default NewCard
 
 const styles = StyleSheet.create({
 	container : {

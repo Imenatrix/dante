@@ -11,21 +11,20 @@ interface Props {
 	title : string,
 }
 
-export default class CardBoxPod extends React.Component<Props> {
+const CardBoxPod : React.FC<Props> = (props) => {
 
-	render() {
+	const title = props.title
+	const onPress = props.onPress
 
-		const title = this.props.title
-		const onPress = this.props.onPress
-
-		return (
-			<Pressable onPress={onPress} style={styles.container}>
-				<Text style={styles.txtTitle}>{title}</Text>
-			</Pressable>
-		)
-	}
+	return (
+		<Pressable onPress={onPress} style={styles.container}>
+			<Text style={styles.txtTitle}>{title}</Text>
+		</Pressable>
+	)
 
 }
+
+export default CardBoxPod
 
 const styles = StyleSheet.create({
 	container : {

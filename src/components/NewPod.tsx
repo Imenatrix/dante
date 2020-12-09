@@ -10,20 +10,19 @@ interface Props {
 	onPress? : (event : GestureResponderEvent) => void
 }
 
-export default class NewPod extends React.Component<Props> {
+const NewPod : React.FC<Props> = (props) => {
 
-	render() {
+	const onPress = props.onPress
 
-		const onPress = this.props.onPress
-
-		return (
-			<Pressable onPress={onPress} style={styles.container}>
-				<Icon style={styles.icon} name='add'/>
-			</Pressable>
-		)
-	}
+	return (
+		<Pressable onPress={onPress} style={styles.container}>
+			<Icon style={styles.icon} name='add'/>
+		</Pressable>
+	)
 
 }
+
+export default NewPod
 
 const styles = StyleSheet.create({
 	container : {

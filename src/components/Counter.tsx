@@ -11,28 +11,27 @@ interface Props {
 	value : number
 }
 
-export default class Counter extends React.Component<Props> {
+const Counter : React.FC<Props> = (props) => {
 
-	render() {
+	const value = props.value
 
-		const value = this.props.value
-
-		return (
-			<View style={styles.container}>
-				<Pressable style={styles.btn}>
-					<Icon style={styles.iconBtn} name='remove'/>
-				</Pressable>
-				<Text style={styles.txtValue}>
-					{value}
-				</Text>
-				<Pressable style={styles.btn}>
-					<Icon style={styles.iconBtn} name='add'/>
-				</Pressable>
-			</View>
-		)
-	}
+	return (
+		<View style={styles.container}>
+			<Pressable style={styles.btn}>
+				<Icon style={styles.iconBtn} name='remove'/>
+			</Pressable>
+			<Text style={styles.txtValue}>
+				{value}
+			</Text>
+			<Pressable style={styles.btn}>
+				<Icon style={styles.iconBtn} name='add'/>
+			</Pressable>
+		</View>
+	)
 
 }
+
+export default Counter
 
 const styles = StyleSheet.create({
 	container : {

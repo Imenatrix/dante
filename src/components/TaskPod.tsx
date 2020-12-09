@@ -10,21 +10,20 @@ interface Props {
 	title : string
 }
 
-export default class TaskPod extends React.Component<Props> {
+const TaskPod : React.FC<Props> = (props) => {
 
-	render() {
+	const title = props.title
 
-		const title = this.props.title
-
-		return (
-			<View style={styles.container}>
-				<TextInput style={styles.txtTitle}>{title}</TextInput>
-				{this.props.counter}
-			</View>
-		)
-	}
+	return (
+		<View style={styles.container}>
+			<TextInput style={styles.txtTitle}>{title}</TextInput>
+			{props.counter}
+		</View>
+	)
 
 }
+
+export default TaskPod
 
 const styles = StyleSheet.create({
 	container : {

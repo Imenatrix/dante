@@ -14,35 +14,34 @@ interface Props {
 	title : string
 }
 
-export default class Card extends React.Component<Props> {
+const Card : React.FC<Props> = (props) => {
 
-	render() {
+	const title = props.title
 
-		const title = this.props.title
-
-		return (
-			<View style={styles.container}>
-				<View style={styles.header}>
-					<Pressable style={styles.btnEndTime}>
-						<Icon style={styles.iconBtnEndTime} name='schedule'/>
-					</Pressable>
-					<View style={styles.headerText}>
-						<TextInput style={styles.txtTitle}>
-							{title}
-						</TextInput>
-						<Text style={styles.txtEndTime}>
-							Ends at: 23:00
-						</Text>
-					</View>
+	return (
+		<View style={styles.container}>
+			<View style={styles.header}>
+				<Pressable style={styles.btnEndTime}>
+					<Icon style={styles.iconBtnEndTime} name='schedule'/>
+				</Pressable>
+				<View style={styles.headerText}>
+					<TextInput style={styles.txtTitle}>
+						{title}
+					</TextInput>
+					<Text style={styles.txtEndTime}>
+						Ends at: 23:00
+					</Text>
 				</View>
-				<ScrollView style={styles.podDrawer}>
-					{this.props.children}
-				</ScrollView>
 			</View>
-		)
-	}
+			<ScrollView style={styles.podDrawer}>
+				{props.children}
+			</ScrollView>
+		</View>
+	)
 
 }
+
+export default Card
 
 const styles = StyleSheet.create({
 	container : {

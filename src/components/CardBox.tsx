@@ -15,38 +15,37 @@ interface Props {
 	onBtnSideMenuPress? : (event : GestureResponderEvent) => void
 }
 
-export default class CardBox extends React.Component<Props> {
+const CardBox : React.FC<Props> = (props) => {
 
-	render() {
+	const title = props.title
 
-		const title = this.props.title
-
-		return (
-			<View style={styles.container}>				
-				<View style={styles.header}>
-					<Pressable onPress={this.props.onBtnSideMenuPress} style={styles.btnSideMenu}>
-						<Icon style={styles.iconBtnSideMenu} name='menu'/>
-					</Pressable>
-					<TextInput style={styles.txtTitle}>
-						{title}
-					</TextInput>
-					<Pressable style={styles.btnConfirm}>
-						<Icon style={styles.iconBtnConfirm} name='check'/>
-					</Pressable>
-				</View>
-				<ScrollView
-					horizontal
-					disableIntervalMomentum
-					contentContainerStyle={styles.contentContainerStyle}
-					snapToInterval={Dimensions.get('window').width - 30}
-					decelerationRate='fast'>
-					{this.props.children}
-				</ScrollView>
+	return (
+		<View style={styles.container}>				
+			<View style={styles.header}>
+				<Pressable onPress={props.onBtnSideMenuPress} style={styles.btnSideMenu}>
+					<Icon style={styles.iconBtnSideMenu} name='menu'/>
+				</Pressable>
+				<TextInput style={styles.txtTitle}>
+					{title}
+				</TextInput>
+				<Pressable style={styles.btnConfirm}>
+					<Icon style={styles.iconBtnConfirm} name='check'/>
+				</Pressable>
 			</View>
-		)
-	}
+			<ScrollView
+				horizontal
+				disableIntervalMomentum
+				contentContainerStyle={styles.contentContainerStyle}
+				snapToInterval={Dimensions.get('window').width - 30}
+				decelerationRate='fast'>
+				{props.children}
+			</ScrollView>
+		</View>
+	)
 
 }
+
+export default CardBox
 
 const styles = StyleSheet.create({
 	container : {

@@ -5,6 +5,7 @@ import React, {
 
 import {
 	BackHandler,
+	GestureResponderEvent,
 	View
 } from 'react-native'
 
@@ -19,7 +20,7 @@ import Counter from 'src/components/Counter'
 import TaskPod from 'src/components/TaskPod'
 import Card from 'src/components/Card'
 import CardBox from 'src/components/CardBox'
-import SideMenu from 'src/components/SideMenu'
+import CardBoxPodDrawer from 'src/components/CardBoxPodDrawer'
 import CardBoxPod from 'src/components/CardBoxPod'
 import NewPod from 'src/components/NewPod'
 import NewCard from 'src/components/NewCard'
@@ -49,7 +50,7 @@ const Main : React.FC = () => {
 		setIsSideMenuOpen(!isSideMenuOpen)
 	}
 
-	function selectCardBox(id : number) {
+	function selectCardBox(event : GestureResponderEvent, id : number) {
 		setSelectedCardBox(id)
 		toggleMenu()
 	}
@@ -71,12 +72,7 @@ const Main : React.FC = () => {
 					<NewCard/>
 				</CardBox>
 			}
-			<SideMenu onBackgroundPress={toggleMenu} open={isSideMenuOpen}>
-				{cardBoxes.map((cardBox) => (
-					<CardBoxPod onPress={() => selectCardBox(cardBox.id)} key={cardBox.id} title={cardBox.title}/>
-				))}
-				<NewPod onPress={() => dispatch(addCardBox())}/>
-			</SideMenu>
+			<CardBoxPodDrawer open={isSideMenuOpen} onBackgroundPress={toggleMenu} onSelect={selectCardBox}/>
 		</View>
 	)
 

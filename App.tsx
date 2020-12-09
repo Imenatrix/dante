@@ -3,6 +3,8 @@ import {
 	BackHandler,
 	View
 } from 'react-native'
+import {Provider} from 'react-redux'
+import store from 'src/store'
 import Counter from 'src/components/Counter'
 import TaskPod from 'src/components/TaskPod'
 import Card from 'src/components/Card'
@@ -58,27 +60,29 @@ const App : React.FC = () => {
 	const cardBox = cardBoxes.find(x => x.id == selectedCardBox)
 
 	return (
-		<View style={{flex : 1}}>
-			{cardBox != undefined &&
-				<CardBox title={cardBox.title} onBtnSideMenuPress={toggleMenu}>
-					{cardBox.cards.map((card) => (
-						<Card key={card.id} title={card.title}>
-							{card.tasks.map((task) => (
-								<TaskPod key={task.id} title={task.title} counter={<Counter value={task.timeFlex}/>}/>
-							))}
-							<NewPod/>
-						</Card>
+		<Provider store={store}>
+			<View style={{flex : 1}}>
+				{cardBox != undefined &&
+					<CardBox title={cardBox.title} onBtnSideMenuPress={toggleMenu}>
+						{cardBox.cards.map((card) => (
+							<Card key={card.id} title={card.title}>
+								{card.tasks.map((task) => (
+									<TaskPod key={task.id} title={task.title} counter={<Counter value={task.timeFlex}/>}/>
+								))}
+								<NewPod/>
+							</Card>
+						))}
+						<NewCard/>
+					</CardBox>
+				}
+				<SideMenu onBackgroundPress={toggleMenu} open={isSideMenuOpen}>
+					{cardBoxes.map((cardBox) => (
+						<CardBoxPod onPress={() => selectCardBox(cardBox.id)} key={cardBox.id} title={cardBox.title}/>
 					))}
-					<NewCard/>
-				</CardBox>
-			}
-			<SideMenu onBackgroundPress={toggleMenu} open={isSideMenuOpen}>
-				{cardBoxes.map((cardBox) => (
-					<CardBoxPod onPress={() => selectCardBox(cardBox.id)} key={cardBox.id} title={cardBox.title}/>
-				))}
-				<NewPod onPress={addCardBox}/>
-			</SideMenu>
-		</View>
+					<NewPod onPress={addCardBox}/>
+				</SideMenu>
+			</View>
+		</Provider>
 	)
 
 }

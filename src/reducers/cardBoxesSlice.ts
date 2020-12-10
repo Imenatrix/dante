@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 interface Task {
 	id : number,
 	title : string,
+	timeFlex : number
 }
 
 interface Card {

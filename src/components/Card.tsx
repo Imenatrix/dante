@@ -44,7 +44,7 @@ const Card : React.FC<Props> = (props) => {
 			</View>
 			<ScrollView style={styles.podDrawer}>
 				{tasks.map((task) => (
-					<TaskPod task={task}/>
+					<TaskPod key={task.id} task={task}/>
 				))}
 				<NewPod onPress={() => dispatch(add({cardId : card.id}))}/>
 			</ScrollView>

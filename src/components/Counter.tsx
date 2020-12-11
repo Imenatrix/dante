@@ -43,7 +43,7 @@ const Counter : React.FC<Props> = (props) => {
 	return (
 		<View style={styles.container}>
 			<Pressable onPress={sub} style={styles.btn}>
-				<Icon style={styles.iconBtn} name='remove'/>
+				<Icon style={styles.iconBtn} name={task.timeFlex > 1 ? 'remove' : 'close'}/>
 			</Pressable>
 			<Text style={styles.txtValue}>
 				{task.timeFlex}

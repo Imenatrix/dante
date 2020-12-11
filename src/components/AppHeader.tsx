@@ -4,23 +4,39 @@ import {
 	Pressable,
 	TextInput,
 	StyleSheet,
-	GestureResponderEvent
+	GestureResponderEvent,
+	NativeSyntheticEvent,
+	TextInputChangeEventData
 } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
+import { useDispatch } from 'react-redux'
+import { setTitle, CardBox } from 'src/reducers/cardBoxesSlice'
 
 interface Props {
-	title : string
+	cardBox : CardBox
 	onBtnSideMenuPress : (event : GestureResponderEvent) => void
 }
 
 const AppHeader : React.FC<Props> = (props) => {
+
+	const dispatch = useDispatch()
+
+	const cardBox = props.cardBox
+
+	function handleTxtTitleChange(event : NativeSyntheticEvent<TextInputChangeEventData>) {
+		dispatch(setTitle({
+			id : cardBox.id,
+			value : event.nativeEvent.text
+		}))
+	}
+	
 	return (
 		<View style={styles.container}>
 			<Pressable onPress={props.onBtnSideMenuPress} style={styles.btnSideMenu}>
 				<Icon style={styles.iconBtnSideMenu} name='menu'/>
 			</Pressable>
-			<TextInput style={styles.txtTitle}>
-				{props.title}
+			<TextInput onChange={handleTxtTitleChange} style={styles.txtTitle}>
+				{cardBox.title}
 			</TextInput>
 			<Pressable style={styles.btnConfirm}>
 				<Icon style={styles.iconBtnConfirm} name='check'/>

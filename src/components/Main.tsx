@@ -48,14 +48,12 @@ const Main : React.FC = () => {
 		toggleMenu()
 	}
 
-	const cardBox = cardBoxes.find(x => x.id == selectedCardBox)
+	const cardBox = cardBoxes.find(x => x.id == selectedCardBox)!
 
 	return (
 		<View style={{flex : 1}}>
-			<AppHeader onBtnSideMenuPress={toggleMenu} title={cardBox != undefined ? cardBox.title : ''}/>
-			{cardBox != undefined &&
-				<CardBox cardBox={cardBox}/>
-			}
+			<AppHeader onBtnSideMenuPress={toggleMenu} cardBox={cardBox}/>
+			<CardBox cardBox={cardBox}/>
 			<CardBoxPodDrawer
 				open={isSideMenuOpen}
 				onSelect={selectCardBox}

@@ -23,8 +23,7 @@ const SideMenu : React.FC<Props> = (props) => {
 
 	const backgroundOpacity = useRef(props.open ? new Animated.Value(0.4) : new Animated.Value(0)).current
 	const bodyFlex = useRef(props.open ? new Animated.Value(3) : new Animated.Value(0)).current
-	const [zIndex, setZIndex] = useState(props.open ? 1 : 0)
-	const [openn, setOpen] = useState(props.open != undefined ? props.open : false)
+	const [isOpen, setOpen] = useState(props.open != undefined ? props.open : false)
 
 	function open() {
 		setOpen(true)
@@ -66,7 +65,7 @@ const SideMenu : React.FC<Props> = (props) => {
 
 	return (
 		<View style={styles.container}>
-			{openn && <>
+			{isOpen && <>
 				<Animated.View style={[styles.body, {flex : bodyFlex}]}>
 					{props.children}
 				</Animated.View>

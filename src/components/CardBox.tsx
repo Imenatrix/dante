@@ -9,15 +9,21 @@ import {
 	GestureResponderEvent
 } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
+import { useSelector } from 'react-redux'
+import { RootState } from 'src/reducers'
+import { CardBox as ICardBox } from 'src/reducers/cardBoxesSlice'
+import Card from 'src/components/Card'
+import NewCard from 'src/components/NewCard'
 
 interface Props {
-	title : string,
+	cardBox : ICardBox
 	onBtnSideMenuPress? : (event : GestureResponderEvent) => void
 }
 
 const CardBox : React.FC<Props> = (props) => {
 
-	const title = props.title
+	const cardBox = props.cardBox
+	const cards = useSelector((state : RootState) => state.cards).filter(card => card.cardBoxId == cardBox.id)
 
 	return (
 		<View style={styles.container}>				
@@ -26,7 +32,7 @@ const CardBox : React.FC<Props> = (props) => {
 					<Icon style={styles.iconBtnSideMenu} name='menu'/>
 				</Pressable>
 				<TextInput style={styles.txtTitle}>
-					{title}
+					{cardBox.title}
 				</TextInput>
 				<Pressable style={styles.btnConfirm}>
 					<Icon style={styles.iconBtnConfirm} name='check'/>
@@ -38,7 +44,10 @@ const CardBox : React.FC<Props> = (props) => {
 				contentContainerStyle={styles.contentContainerStyle}
 				snapToInterval={Dimensions.get('window').width - 30}
 				decelerationRate='fast'>
-				{props.children}
+				{cards.map(card => (
+					<Card key={card.id} card={card}/>
+				))}
+				<NewCard/>
 			</ScrollView>
 		</View>
 	)

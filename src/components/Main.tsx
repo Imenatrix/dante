@@ -59,12 +59,7 @@ const Main : React.FC = () => {
 	return (
 		<View style={{flex : 1}}>
 			{cardBox != undefined &&
-				<CardBox title={cardBox.title} onBtnSideMenuPress={toggleMenu}>
-					{cards.map((card) => (
-						<Card key={card.id} card={card}/>
-					))}
-					<NewCard/>
-				</CardBox>
+				<CardBox cardBox={cardBox} onBtnSideMenuPress={toggleMenu}/>
 			}
 			<CardBoxPodDrawer
 				open={isSideMenuOpen}

@@ -34,14 +34,17 @@ const AppHeader : React.FC<Props> = (props) => {
 	
 	return (
 		<View style={styles.container}>
-			<Pressable onPress={props.onBtnSideMenuPress} style={styles.btnSideMenu}>
-				<Icon style={styles.iconBtnSideMenu} name='menu'/>
+			<Pressable onPress={props.onBtnSideMenuPress}>
+				<Icon style={styles.icon} name='menu'/>
+			</Pressable>
+			<Pressable style={styles.btn}>
+				<Icon name='close' style={styles.icon}/>
 			</Pressable>
 			<TextInput onChange={handleTxtTitleChange} style={styles.txtTitle}>
 				{cardBox?.title}
 			</TextInput>
-			<Pressable style={styles.btnConfirm}>
-				<Icon style={styles.iconBtnConfirm} name='check'/>
+			<Pressable style={styles.btn}>
+				<Icon style={styles.icon} name='check'/>
 			</Pressable>
 		</View>
 	)
@@ -55,19 +58,18 @@ const styles = StyleSheet.create({
 		alignItems : 'center',
 		backgroundColor : 'gray',
 		justifyContent : 'space-between',
-		padding : 5
+		padding : 5,
+		height : 60
 	},
-	btnSideMenu : {
-
-	},
-	iconBtnSideMenu : {
-		fontSize : 40
-	},
-	btnConfirm : {
+	btn : {
+		height : '100%',
+		aspectRatio : 1,
+		borderRadius : 9999999999,
 		backgroundColor : 'green',
-		borderRadius : 99999
+		justifyContent : 'center',
+		alignItems : 'center'
 	},
-	iconBtnConfirm : {
+	icon : {
 		fontSize : 40
 	},
 	txtTitle : {

@@ -1,4 +1,6 @@
-import React from 'react'
+import React, {
+	useState
+} from 'react'
 import {
 	Pressable,
 	ScrollView,
@@ -17,6 +19,7 @@ import TaskPod from 'src/components/TaskPod'
 import NewPod from 'src/components/NewPod'
 import { Card as ICard, setTitle } from 'src/reducers/cardsSlice'
 import { add } from 'src/reducers/tasksSlice'
+import TimePicker from '@react-native-community/datetimepicker'
 
 interface Props {
 	card : ICard
@@ -29,6 +32,8 @@ const Card : React.FC<Props> = (props) => {
 	const card = props.card
 	const tasks = useSelector((state : RootState) => state.tasks).filter(task => task.cardId == card.id)
 
+	const [isTimePickerOpen, setIsTimePickerOpen] = useState(false)
+
 	function handleTxtTitleChange(event : NativeSyntheticEvent<TextInputChangeEventData>) {
 		dispatch(setTitle({
 			id : card.id,
@@ -36,10 +41,17 @@ const Card : React.FC<Props> = (props) => {
 		}))
 	}
 
+	function toggleTimePicker() {
+		setIsTimePickerOpen(!isTimePickerOpen)
+	}
+
 	return (
 		<View style={styles.container}>
+			{isTimePickerOpen &&
+				<TimePicker value={card.endTime} mode='time'/>
+			}
 			<View style={styles.header}>
-				<Pressable style={styles.btnEndTime}>
+				<Pressable onPress={toggleTimePicker} style={styles.btnEndTime}>
 					<Icon style={styles.iconBtnEndTime} name='schedule'/>
 				</Pressable>
 				<View style={styles.headerText}>

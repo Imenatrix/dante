@@ -1,25 +1,17 @@
-import React, {
-	useState
-} from 'react'
+import React from 'react'
 import {
-	Pressable,
 	ScrollView,
 	StyleSheet,
-	Text,
-	TextInput,
 	View,
 	Dimensions,
-	NativeSyntheticEvent,
-	TextInputChangeEventData
 } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from 'src/reducers'
-import Icon from 'react-native-vector-icons/MaterialIcons'
 import TaskPod from 'src/components/TaskPod'
 import NewPod from 'src/components/NewPod'
-import { Card as ICard, remove, setTitle, setEndTime } from 'src/reducers/cardsSlice'
+import { Card as ICard } from 'src/reducers/cardsSlice'
 import { add } from 'src/reducers/tasksSlice'
-import TimePicker from '@react-native-community/datetimepicker'
+import CardHeader from 'src/components/CardHeader'
 
 interface Props {
 	card : ICard
@@ -32,52 +24,9 @@ const Card : React.FC<Props> = (props) => {
 	const card = props.card
 	const tasks = useSelector((state : RootState) => state.tasks).filter(task => task.cardId == card.id)
 
-	const [isTimePickerOpen, setIsTimePickerOpen] = useState(false)
-
-	function handleTxtTitleChange(event : NativeSyntheticEvent<TextInputChangeEventData>) {
-		dispatch(setTitle({
-			id : card.id,
-			value : event.nativeEvent.text
-		}))
-	}
-
-	function handleTimePickerChange(event : Event, date? : Date) {
-		setIsTimePickerOpen(false)
-		if (date != undefined) {
-			dispatch(setEndTime({
-				id : card.id,
-				date : date.getTime()
-			}))
-		}
-	}
-
-	function onBtnRemovePress() {
-		dispatch(remove({
-			id : card.id
-		}))
-	}
-
 	return (
 		<View style={styles.container}>
-			{isTimePickerOpen &&
-				<TimePicker onChange={handleTimePickerChange} value={new Date(card.endTime)} mode='time'/>
-			}
-			<View style={styles.header}>
-				<Pressable onPress={() => setIsTimePickerOpen(true)} style={styles.btnEndTime}>
-					<Icon style={styles.iconBtnEndTime} name='schedule'/>
-				</Pressable>
-				<View style={styles.headerText}>
-					<TextInput onChange={handleTxtTitleChange} style={styles.txtTitle}>
-						{card.title}
-					</TextInput>
-					<Text style={styles.txtEndTime}>
-						Ends at: {new Date(card.endTime).toLocaleTimeString().slice(0, -3)}
-					</Text>
-				</View>
-				<Pressable onPress={onBtnRemovePress} style={styles.btnEndTime}>
-					<Icon style={styles.iconBtnEndTime} name='close'/>
-				</Pressable>
-			</View>
+			<CardHeader card={card}/>
 			<ScrollView style={styles.podDrawer}>
 				{tasks.map((task) => (
 					<TaskPod key={task.id} task={task}/>
@@ -99,33 +48,6 @@ const styles = StyleSheet.create({
 		marginLeft : 10,
 		borderRadius : 5,
 		overflow : 'hidden'
-	},
-	header : {
-		flexDirection : 'row',
-		alignItems : 'center',
-		padding : 10,
-		backgroundColor : 'gray'
-	},
-	btnEndTime : {
-		width : 50,
-		height : 50,
-		backgroundColor : 'green',
-		borderRadius : 25,
-		justifyContent : 'center',
-		alignItems : 'center'
-	},
-	iconBtnEndTime : {
-		fontSize : 35
-	},
-	headerText : {
-		flex : 1,
-		alignItems : 'center'
-	},
-	txtTitle : {
-		fontSize : 30,
-	},
-	txtEndTime : {
-		marginTop : -10,
 	},
 	podDrawer : {
 		paddingVertical : 5,

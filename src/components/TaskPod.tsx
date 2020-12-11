@@ -6,7 +6,7 @@ import {
 } from 'react-native'
 import { useDispatch } from 'react-redux'
 import Counter from 'src/components/Counter'
-import { add, addToTimeFlex, Task } from 'src/reducers/tasksSlice'
+import { remove, addToTimeFlex, Task } from 'src/reducers/tasksSlice'
 
 interface Props {
 	task : Task
@@ -26,10 +26,17 @@ const TaskPod : React.FC<Props> = (props) => {
 	}
 
 	function sub() {
-		dispatch(addToTimeFlex({
-			id : task.id,
-			ammount : -1
-		}))
+		if (task.timeFlex > 1) {
+			dispatch(addToTimeFlex({
+				id : task.id,
+				ammount : -1
+			}))
+		}
+		else {
+			dispatch(remove({
+				id : task.id
+			}))
+		}
 	}
  
 	return (

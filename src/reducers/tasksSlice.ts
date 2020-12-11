@@ -21,11 +21,14 @@ const tasksSlice = createSlice({
 			}
 			state.push(task)
 		},
+		remove(state, action) {
+			state.splice(action.payload.id, 1)
+		},
 		addToTimeFlex(state, action) {
 			state[action.payload.id].timeFlex += action.payload.ammount
 		}
 	}
 })
 
-export const { add, addToTimeFlex } = tasksSlice.actions
+export const { add, remove, addToTimeFlex } = tasksSlice.actions
 export default tasksSlice.reducer

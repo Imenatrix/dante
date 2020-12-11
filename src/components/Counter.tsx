@@ -3,12 +3,15 @@ import {
 	View,
 	Pressable,
 	Text,
-	StyleSheet
+	StyleSheet,
+	GestureResponderEvent
 } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 interface Props {
-	value : number
+	value : number,
+	add : (event : GestureResponderEvent) => void,
+	sub : (event : GestureResponderEvent) => void
 }
 
 const Counter : React.FC<Props> = (props) => {
@@ -17,13 +20,13 @@ const Counter : React.FC<Props> = (props) => {
 
 	return (
 		<View style={styles.container}>
-			<Pressable style={styles.btn}>
+			<Pressable onPress={props.sub} style={styles.btn}>
 				<Icon style={styles.iconBtn} name='remove'/>
 			</Pressable>
 			<Text style={styles.txtValue}>
 				{value}
 			</Text>
-			<Pressable style={styles.btn}>
+			<Pressable onPress={props.add} style={styles.btn}>
 				<Icon style={styles.iconBtn} name='add'/>
 			</Pressable>
 		</View>

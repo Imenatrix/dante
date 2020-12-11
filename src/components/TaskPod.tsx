@@ -4,8 +4,9 @@ import {
 	TextInput,
 	StyleSheet
 } from 'react-native'
+import { useDispatch } from 'react-redux'
 import Counter from 'src/components/Counter'
-import { Task } from 'src/reducers/tasksSlice'
+import { add, addToTimeFlex, Task } from 'src/reducers/tasksSlice'
 
 interface Props {
 	task : Task
@@ -13,12 +14,28 @@ interface Props {
 
 const TaskPod : React.FC<Props> = (props) => {
 
+	const dispatch = useDispatch()
+
 	const task = props.task
 
+	function add() {
+		dispatch(addToTimeFlex({
+			id : task.id,
+			ammount : 1
+		}))
+	}
+
+	function sub() {
+		dispatch(addToTimeFlex({
+			id : task.id,
+			ammount : -1
+		}))
+	}
+ 
 	return (
 		<View style={styles.container}>
 			<TextInput style={styles.txtTitle}>{task.title}</TextInput>
-			<Counter value={task.timeFlex}/>
+			<Counter add={add} sub={sub} value={task.timeFlex}/>
 		</View>
 	)
 

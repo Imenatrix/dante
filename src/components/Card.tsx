@@ -8,18 +8,21 @@ import {
 	View,
 	Dimensions
 } from 'react-native'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from 'src/reducers'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import TaskPod from 'src/components/TaskPod'
 import NewPod from 'src/components/NewPod'
 import { Card as ICard } from 'src/reducers/cardsSlice'
+import { add } from 'src/reducers/tasksSlice'
 
 interface Props {
 	card : ICard
 }
 
 const Card : React.FC<Props> = (props) => {
+
+	const dispatch = useDispatch()
 
 	const card = props.card
 	const tasks = useSelector((state : RootState) => state.tasks).filter(task => task.cardId == card.id)
@@ -43,7 +46,7 @@ const Card : React.FC<Props> = (props) => {
 				{tasks.map((task) => (
 					<TaskPod task={task}/>
 				))}
-				<NewPod/>
+				<NewPod onPress={() => dispatch(add({cardId : card.id}))}/>
 			</ScrollView>
 		</View>
 	)

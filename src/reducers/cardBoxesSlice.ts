@@ -10,7 +10,7 @@ const cardBoxesSlice = createSlice({
 	initialState : new Array<CardBox>(),
 	reducers : {
 		add(state, action) {
-			const id = state.length != 0 ? state.map((cardBox : CardBox) => cardBox.id).sort().reverse()[0] + 1 : 0
+			const id = state.length != 0 ? state.map((cardBox : CardBox) => cardBox.id).sort((a : number, b : number) => a - b).reverse()[0] + 1 : 0
 			const cardBox : CardBox = {
 				id : id,
 				title : 'New Card Box'

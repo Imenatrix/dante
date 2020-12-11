@@ -12,7 +12,7 @@ const cardsSlicer = createSlice({
 	initialState : new Array<Card>(),
 	reducers : {
 		add(state, action) {
-			const id = state.length != 0 ? state.map((card : Card) => card.id).sort().reverse()[0] + 1 : 0
+			const id = state.length != 0 ? state.map((card : Card) => card.id).sort((a : number, b : number) => a - b).reverse()[0] + 1 : 0
 			const card : Card = {
 				id : id,
 				endTime : new Date(0).setHours(0),

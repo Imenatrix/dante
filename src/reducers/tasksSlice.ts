@@ -12,7 +12,8 @@ const tasksSlice = createSlice({
 	initialState : new Array<Task>(),
 	reducers : {
 		add(state, action) {
-			const id = state.length != 0 ? state.map((task : Task) => task.id).sort().reverse()[0] + 1 : 0
+			const id = state.length != 0 ? state.map((task : Task) => task.id).sort((a : number, b : number) => a - b).reverse()[0] + 1 : 0
+			console.log(state)
 			const task : Task = {
 				id : id,
 				title : 'New Task',

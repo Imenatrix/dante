@@ -4,9 +4,9 @@ import {
 	TextInput,
 	StyleSheet
 } from 'react-native'
+import Counter from 'src/components/Counter'
 
 interface Props {
-	counter : Element,
 	title : string
 }
 
@@ -17,7 +17,7 @@ const TaskPod : React.FC<Props> = (props) => {
 	return (
 		<View style={styles.container}>
 			<TextInput style={styles.txtTitle}>{title}</TextInput>
-			{props.counter}
+			<Counter value={0}/>
 		</View>
 	)
 

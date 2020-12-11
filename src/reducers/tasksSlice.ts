@@ -22,10 +22,11 @@ const tasksSlice = createSlice({
 			state.push(task)
 		},
 		remove(state, action) {
-			state.splice(action.payload.id, 1)
+			const index = state.indexOf(state.find(task => task.id == action.payload.id)!)
+			state.splice(index, 1)
 		},
 		addToTimeFlex(state, action) {
-			state[action.payload.id].timeFlex += action.payload.ammount
+			state.find(task => task.id == action.payload.id)!.timeFlex += action.payload.ammount
 		}
 	}
 })

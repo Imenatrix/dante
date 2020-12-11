@@ -42,13 +42,13 @@ const Card : React.FC<Props> = (props) => {
 	}
 
 	function handleTimePickerChange(event : Event, date? : Date) {
+		setIsTimePickerOpen(false)
 		if (date != undefined) {
 			dispatch(setEndTime({
 				id : card.id,
 				date : date.getTime()
 			}))
 		}
-		setIsTimePickerOpen(false)
 	}
 
 	return (

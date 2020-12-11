@@ -17,7 +17,7 @@ import { RootState } from 'src/reducers'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import TaskPod from 'src/components/TaskPod'
 import NewPod from 'src/components/NewPod'
-import { Card as ICard, setTitle } from 'src/reducers/cardsSlice'
+import { Card as ICard, setTitle, setEndTime } from 'src/reducers/cardsSlice'
 import { add } from 'src/reducers/tasksSlice'
 import TimePicker from '@react-native-community/datetimepicker'
 
@@ -41,17 +41,23 @@ const Card : React.FC<Props> = (props) => {
 		}))
 	}
 
-	function toggleTimePicker() {
-		setIsTimePickerOpen(!isTimePickerOpen)
+	function handleTimePickerChange(event : Event, date? : Date) {
+		if (date != undefined) {
+			dispatch(setEndTime({
+				id : card.id,
+				date : date.getTime()
+			}))
+		}
+		setIsTimePickerOpen(false)
 	}
 
 	return (
 		<View style={styles.container}>
 			{isTimePickerOpen &&
-				<TimePicker value={card.endTime} mode='time'/>
+				<TimePicker onChange={handleTimePickerChange} value={new Date(card.endTime)} mode='time'/>
 			}
 			<View style={styles.header}>
-				<Pressable onPress={toggleTimePicker} style={styles.btnEndTime}>
+				<Pressable onPress={() => setIsTimePickerOpen(true)} style={styles.btnEndTime}>
 					<Icon style={styles.iconBtnEndTime} name='schedule'/>
 				</Pressable>
 				<View style={styles.headerText}>
@@ -59,7 +65,7 @@ const Card : React.FC<Props> = (props) => {
 						{card.title}
 					</TextInput>
 					<Text style={styles.txtEndTime}>
-						Ends at: {card.endTime.toLocaleTimeString().slice(0, -3)}
+						Ends at: {new Date(card.endTime).toLocaleTimeString().slice(0, -3)}
 					</Text>
 				</View>
 			</View>

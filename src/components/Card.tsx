@@ -47,7 +47,7 @@ const Card : React.FC<Props> = (props) => {
 						{card.title}
 					</TextInput>
 					<Text style={styles.txtEndTime}>
-						Ends at: 23:00
+						Ends at: {card.endTime.toLocaleTimeString().slice(0, -3)}
 					</Text>
 				</View>
 			</View>

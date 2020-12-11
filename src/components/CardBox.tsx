@@ -5,9 +5,10 @@ import {
 	StyleSheet,
 	View,
 } from 'react-native'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from 'src/reducers'
 import { CardBox as ICardBox } from 'src/reducers/cardBoxesSlice'
+import { add } from 'src/reducers/cardsSlice'
 import Card from 'src/components/Card'
 import NewCard from 'src/components/NewCard'
 
@@ -16,6 +17,8 @@ interface Props {
 }
 
 const CardBox : React.FC<Props> = (props) => {
+
+	const dispatch = useDispatch()
 
 	const cardBox = props.cardBox
 	const cards = useSelector((state : RootState) => state.cards).filter(card => card.cardBoxId == cardBox.id)
@@ -31,7 +34,7 @@ const CardBox : React.FC<Props> = (props) => {
 				{cards.map(card => (
 					<Card key={card.id} card={card}/>
 				))}
-				<NewCard/>
+				<NewCard onPress={() => dispatch(add({cardBoxId : cardBox.id}))}/>
 			</ScrollView>
 		</View>
 	)

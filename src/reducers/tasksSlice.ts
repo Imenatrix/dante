@@ -15,8 +15,8 @@ const tasksSlice = createSlice({
 			const id = state.length != 0 ? state.map((task : Task) => task.id).sort().reverse()[0] + 1 : 0
 			const task : Task = {
 				id : id,
-				title : 'Code',
-				cardId : 0,
+				title : 'New Task',
+				cardId : action.payload.cardId,
 				timeFlex : 1
 			}
 			state.push(task)

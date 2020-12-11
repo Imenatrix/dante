@@ -13,7 +13,7 @@ const cardBoxesSlice = createSlice({
 			const id = state.length != 0 ? state.map((cardBox : CardBox) => cardBox.id).sort().reverse()[0] + 1 : 0
 			const cardBox : CardBox = {
 				id : id,
-				title : 'Week'
+				title : 'New Card Box'
 			}
 			state.push(cardBox)
 		}

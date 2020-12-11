@@ -14,8 +14,8 @@ const cardsSlicer = createSlice({
 			const id = state.length != 0 ? state.map((card : Card) => card.id).sort().reverse()[0] + 1 : 0
 			const card : Card = {
 				id : id,
-				cardBoxId : 0,
-				title : 'Monday'
+				cardBoxId : action.payload.cardBoxId,
+				title : 'New Card'
 			}
 			state.push(card)
 		}

@@ -2,14 +2,19 @@ import React from 'react'
 import {
 	Pressable,
 	StyleSheet,
-	Dimensions
+	Dimensions,
+	GestureResponderEvent
 } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-const NewCard : React.FC = () => {
+interface Props {
+	onPress : (event : GestureResponderEvent) => void
+}
+
+const NewCard : React.FC<Props> = (props) => {
 
 	return (
-		<Pressable style={styles.container}>
+		<Pressable onPress={props.onPress} style={styles.container}>
 			<Icon style={styles.icon} name='add'/>
 		</Pressable>
 	)

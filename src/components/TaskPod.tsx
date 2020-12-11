@@ -2,10 +2,13 @@ import React from 'react'
 import {
 	View,
 	TextInput,
-	StyleSheet
+	StyleSheet,
+	NativeSyntheticEvent,
+	TextInputChangeEventData
 } from 'react-native'
+import { useDispatch } from 'react-redux'
 import Counter from 'src/components/Counter'
-import { Task } from 'src/reducers/tasksSlice'
+import { Task, setTitle } from 'src/reducers/tasksSlice'
 
 interface Props {
 	task : Task
@@ -13,11 +16,20 @@ interface Props {
 
 const TaskPod : React.FC<Props> = (props) => {
 
+	const dispatch = useDispatch()
+
 	const task = props.task
+
+	function handleTxtTileChange(event : NativeSyntheticEvent<TextInputChangeEventData>) {
+		dispatch(setTitle({
+			id : task.id,
+			value : event.nativeEvent.text
+		}))
+	}
 
 	return (
 		<View style={styles.container}>
-			<TextInput style={styles.txtTitle}>{task.title}</TextInput>
+			<TextInput onChange={handleTxtTileChange} style={styles.txtTitle}>{task.title}</TextInput>
 			<Counter task={task}/>
 		</View>
 	)

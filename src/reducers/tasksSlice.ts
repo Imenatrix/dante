@@ -25,11 +25,14 @@ const tasksSlice = createSlice({
 			const index = state.indexOf(state.find(task => task.id == action.payload.id)!)
 			state.splice(index, 1)
 		},
+		setTitle(state, action) {
+			state.find(task => task.id == action.payload.id)!.title = action.payload.value
+		},
 		addToTimeFlex(state, action) {
 			state.find(task => task.id == action.payload.id)!.timeFlex += action.payload.ammount
 		}
 	}
 })
 
-export const { add, remove, addToTimeFlex } = tasksSlice.actions
+export const { add, remove, setTitle, addToTimeFlex } = tasksSlice.actions
 export default tasksSlice.reducer

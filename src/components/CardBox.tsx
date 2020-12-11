@@ -4,11 +4,7 @@ import {
 	Dimensions,
 	StyleSheet,
 	View,
-	Pressable,
-	TextInput,
-	GestureResponderEvent
 } from 'react-native'
-import Icon from 'react-native-vector-icons/MaterialIcons'
 import { useSelector } from 'react-redux'
 import { RootState } from 'src/reducers'
 import { CardBox as ICardBox } from 'src/reducers/cardBoxesSlice'
@@ -17,7 +13,6 @@ import NewCard from 'src/components/NewCard'
 
 interface Props {
 	cardBox : ICardBox
-	onBtnSideMenuPress? : (event : GestureResponderEvent) => void
 }
 
 const CardBox : React.FC<Props> = (props) => {
@@ -26,18 +21,7 @@ const CardBox : React.FC<Props> = (props) => {
 	const cards = useSelector((state : RootState) => state.cards).filter(card => card.cardBoxId == cardBox.id)
 
 	return (
-		<View style={styles.container}>				
-			<View style={styles.header}>
-				<Pressable onPress={props.onBtnSideMenuPress} style={styles.btnSideMenu}>
-					<Icon style={styles.iconBtnSideMenu} name='menu'/>
-				</Pressable>
-				<TextInput style={styles.txtTitle}>
-					{cardBox.title}
-				</TextInput>
-				<Pressable style={styles.btnConfirm}>
-					<Icon style={styles.iconBtnConfirm} name='check'/>
-				</Pressable>
-			</View>
+		<View style={styles.container}>
 			<ScrollView
 				horizontal
 				disableIntervalMomentum

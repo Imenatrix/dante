@@ -9,7 +9,7 @@ export interface Task {
 
 const tasksSlice = createSlice({
 	name : 'tasks',
-	initialState : new Array<Task>({id : 0, title : 'Code', cardId : 0, timeFlex : 1}),
+	initialState : new Array<Task>(),
 	reducers : {
 		add(state, action) {
 			const id = state.length != 0 ? state.map((task : Task) => task.id).sort().reverse()[0] + 1 : 0

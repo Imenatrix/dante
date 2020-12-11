@@ -7,7 +7,7 @@ export interface CardBox {
 
 const cardBoxesSlice = createSlice({
 	name : 'cardBoxes',
-	initialState : new Array<CardBox>({id : 0, title : 'Week'}),
+	initialState : new Array<CardBox>(),
 	reducers : {
 		add(state, action) {
 			const id = state.length != 0 ? state.map((cardBox : CardBox) => cardBox.id).sort().reverse()[0] + 1 : 0

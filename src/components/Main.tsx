@@ -18,9 +18,12 @@ import { RootState } from 'src/reducers'
 import AppHeader from 'src/components/AppHeader'
 import CardBox from 'src/components/CardBox'
 import CardBoxPodDrawer from 'src/components/CardBoxPodDrawer'
+import { add } from 'src/reducers/cardBoxesSlice'
 
 
 const Main : React.FC = () => {
+
+	const dispatch = useDispatch()
 
 	const [isSideMenuOpen, setIsSideMenuOpen] = useState(false)
 	const [selectedCardBox, setSelectedCardBox] = useState(0)
@@ -48,6 +51,12 @@ const Main : React.FC = () => {
 		toggleMenu()
 	}
 
+	if (cardBoxes.length == 0) {
+		dispatch(add({}))
+	}
+	if (cardBoxes.find(x => x.id == selectedCardBox) == undefined) {
+		setSelectedCardBox(0)
+	}
 	const cardBox = cardBoxes.find(x => x.id == selectedCardBox)!
 
 	return (

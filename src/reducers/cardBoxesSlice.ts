@@ -1,44 +1,23 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-interface Task {
+export interface CardBox {
 	id : number,
-	title : string,
-	timeFlex : number
+	title : string
 }
 
-interface Card {
-	id : number,
-	title : string,
-	tasks : Task[]
-}
-
-interface CardBox {
-	id : number,
-	title : string,
-	cards : Card[]
-}
-
-const initialState : CardBox[] = [{
-	id : 0,
-	title : 'Week',
-	cards : []
-}]
-
-export const cardBoxesSlice = createSlice({
+const cardBoxesSlice = createSlice({
 	name : 'cardBoxes',
-	initialState : initialState,
+	initialState : new Array<CardBox>(),
 	reducers : {
-		addCardBox : (state) => {
-			const id = state.map(cardBox => cardBox.id).sort().reverse()[0] + 1
+		add(state, action) {
+			const id = state.length != 0 ? state.map((cardBox : CardBox) => cardBox.id).sort().reverse()[0] + 1 : 0
 			const cardBox : CardBox = {
 				id : id,
-				title : 'Wook',
-				cards : []
+				title : 'Week'
 			}
-			state.push(cardBox)
 		}
 	}
 })
 
-export const {addCardBox} = cardBoxesSlice.actions
+export const { add } = cardBoxesSlice.actions
 export default cardBoxesSlice.reducer

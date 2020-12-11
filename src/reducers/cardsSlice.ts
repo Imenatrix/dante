@@ -3,17 +3,19 @@ import { createSlice } from '@reduxjs/toolkit'
 export interface Card {
 	id : number,
 	cardBoxId : number,
+	endTime : Date
 	title : string,
 }
 
 const cardsSlicer = createSlice({
 	name : 'cards',
-	initialState : new Array<Card>({id : 0, cardBoxId : 0, title : 'Monday'}),
+	initialState : new Array<Card>({id : 0, cardBoxId : 0, endTime : new Date(new Date(0).setHours(0)), title : 'Monday'}),
 	reducers : {
 		add(state, action) {
 			const id = state.length != 0 ? state.map((card : Card) => card.id).sort().reverse()[0] + 1 : 0
 			const card : Card = {
 				id : id,
+				endTime : new Date(new Date(0).setHours(0)),
 				cardBoxId : action.payload.cardBoxId,
 				title : 'New Card'
 			}

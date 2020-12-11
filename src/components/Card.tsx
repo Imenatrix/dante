@@ -13,17 +13,16 @@ import { RootState } from 'src/reducers'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import TaskPod from 'src/components/TaskPod'
 import NewPod from 'src/components/NewPod'
-import Counter from 'src/components/Counter'
+import { Card as ICard } from 'src/reducers/cardsSlice'
 
 interface Props {
-	id : number,
-	title : string
+	card : ICard
 }
 
 const Card : React.FC<Props> = (props) => {
 
-	const title = props.title
-	const tasks = useSelector((state : RootState) => state.tasks).filter(task => task.cardId == props.id)
+	const card = props.card
+	const tasks = useSelector((state : RootState) => state.tasks).filter(task => task.cardId == card.id)
 
 	return (
 		<View style={styles.container}>
@@ -33,7 +32,7 @@ const Card : React.FC<Props> = (props) => {
 				</Pressable>
 				<View style={styles.headerText}>
 					<TextInput style={styles.txtTitle}>
-						{title}
+						{card.title}
 					</TextInput>
 					<Text style={styles.txtEndTime}>
 						Ends at: 23:00

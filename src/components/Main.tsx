@@ -61,7 +61,7 @@ const Main : React.FC = () => {
 			{cardBox != undefined &&
 				<CardBox title={cardBox.title} onBtnSideMenuPress={toggleMenu}>
 					{cards.map((card) => (
-						<Card key={card.id} title={card.title} id={card.id}/>
+						<Card key={card.id} card={card}/>
 					))}
 					<NewCard/>
 				</CardBox>

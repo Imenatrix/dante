@@ -17,7 +17,7 @@ import { RootState } from 'src/reducers'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import TaskPod from 'src/components/TaskPod'
 import NewPod from 'src/components/NewPod'
-import { Card as ICard, setTitle, setEndTime } from 'src/reducers/cardsSlice'
+import { Card as ICard, remove, setTitle, setEndTime } from 'src/reducers/cardsSlice'
 import { add } from 'src/reducers/tasksSlice'
 import TimePicker from '@react-native-community/datetimepicker'
 
@@ -51,6 +51,12 @@ const Card : React.FC<Props> = (props) => {
 		}
 	}
 
+	function onBtnRemovePress() {
+		dispatch(remove({
+			id : card.id
+		}))
+	}
+
 	return (
 		<View style={styles.container}>
 			{isTimePickerOpen &&
@@ -68,6 +74,9 @@ const Card : React.FC<Props> = (props) => {
 						Ends at: {new Date(card.endTime).toLocaleTimeString().slice(0, -3)}
 					</Text>
 				</View>
+				<Pressable onPress={onBtnRemovePress} style={styles.btnEndTime}>
+					<Icon style={styles.iconBtnEndTime} name='close'/>
+				</Pressable>
 			</View>
 			<ScrollView style={styles.podDrawer}>
 				{tasks.map((task) => (
@@ -110,7 +119,6 @@ const styles = StyleSheet.create({
 	},
 	headerText : {
 		flex : 1,
-		marginRight : 50,
 		alignItems : 'center'
 	},
 	txtTitle : {

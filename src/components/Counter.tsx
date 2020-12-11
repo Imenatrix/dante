@@ -4,29 +4,51 @@ import {
 	Pressable,
 	Text,
 	StyleSheet,
-	GestureResponderEvent
 } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
+import { useDispatch } from 'react-redux'
+import { remove, addToTimeFlex, Task } from 'src/reducers/tasksSlice'
 
 interface Props {
-	value : number,
-	add : (event : GestureResponderEvent) => void,
-	sub : (event : GestureResponderEvent) => void
+	task : Task
 }
 
 const Counter : React.FC<Props> = (props) => {
 
-	const value = props.value
+	const dispatch = useDispatch()
+
+	const task = props.task
+
+	function add() {
+		dispatch(addToTimeFlex({
+			id : task.id,
+			ammount : 1
+		}))
+	}
+
+	function sub() {
+		if (task.timeFlex > 1) {
+			dispatch(addToTimeFlex({
+				id : task.id,
+				ammount : -1
+			}))
+		}
+		else {
+			dispatch(remove({
+				id : task.id
+			}))
+		}
+	}
 
 	return (
 		<View style={styles.container}>
-			<Pressable onPress={props.sub} style={styles.btn}>
+			<Pressable onPress={sub} style={styles.btn}>
 				<Icon style={styles.iconBtn} name='remove'/>
 			</Pressable>
 			<Text style={styles.txtValue}>
-				{value}
+				{task.timeFlex}
 			</Text>
-			<Pressable onPress={props.add} style={styles.btn}>
+			<Pressable onPress={add} style={styles.btn}>
 				<Icon style={styles.iconBtn} name='add'/>
 			</Pressable>
 		</View>

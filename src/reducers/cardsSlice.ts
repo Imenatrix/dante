@@ -18,9 +18,12 @@ const cardsSlicer = createSlice({
 				title : 'New Card'
 			}
 			state.push(card)
+		},
+		setTitle(state, action) {
+			state.find(card => card.id == action.payload.id)!.title = action.payload.value
 		}
 	}
 })
 
-export const { add } = cardsSlicer.actions
+export const { add, setTitle } = cardsSlicer.actions
 export default cardsSlicer.reducer

@@ -6,14 +6,16 @@ import {
 	Text,
 	TextInput,
 	View,
-	Dimensions
+	Dimensions,
+	NativeSyntheticEvent,
+	TextInputChangeEventData
 } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from 'src/reducers'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import TaskPod from 'src/components/TaskPod'
 import NewPod from 'src/components/NewPod'
-import { Card as ICard } from 'src/reducers/cardsSlice'
+import { Card as ICard, setTitle } from 'src/reducers/cardsSlice'
 import { add } from 'src/reducers/tasksSlice'
 
 interface Props {
@@ -27,6 +29,13 @@ const Card : React.FC<Props> = (props) => {
 	const card = props.card
 	const tasks = useSelector((state : RootState) => state.tasks).filter(task => task.cardId == card.id)
 
+	function handleTxtTitleChange(event : NativeSyntheticEvent<TextInputChangeEventData>) {
+		dispatch(setTitle({
+			id : card.id,
+			value : event.nativeEvent.text
+		}))
+	}
+
 	return (
 		<View style={styles.container}>
 			<View style={styles.header}>
@@ -34,7 +43,7 @@ const Card : React.FC<Props> = (props) => {
 					<Icon style={styles.iconBtnEndTime} name='schedule'/>
 				</Pressable>
 				<View style={styles.headerText}>
-					<TextInput style={styles.txtTitle}>
+					<TextInput onChange={handleTxtTitleChange} style={styles.txtTitle}>
 						{card.title}
 					</TextInput>
 					<Text style={styles.txtEndTime}>

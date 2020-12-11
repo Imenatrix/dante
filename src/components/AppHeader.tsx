@@ -13,7 +13,7 @@ import { useDispatch } from 'react-redux'
 import { setTitle, CardBox } from 'src/reducers/cardBoxesSlice'
 
 interface Props {
-	cardBox : CardBox
+	cardBox? : CardBox
 	onBtnSideMenuPress : (event : GestureResponderEvent) => void
 }
 
@@ -24,10 +24,12 @@ const AppHeader : React.FC<Props> = (props) => {
 	const cardBox = props.cardBox
 
 	function handleTxtTitleChange(event : NativeSyntheticEvent<TextInputChangeEventData>) {
-		dispatch(setTitle({
-			id : cardBox.id,
-			value : event.nativeEvent.text
-		}))
+		if (cardBox != undefined) {
+			dispatch(setTitle({
+				id : cardBox.id,
+				value : event.nativeEvent.text
+			}))
+		}
 	}
 	
 	return (
@@ -36,7 +38,7 @@ const AppHeader : React.FC<Props> = (props) => {
 				<Icon style={styles.iconBtnSideMenu} name='menu'/>
 			</Pressable>
 			<TextInput onChange={handleTxtTitleChange} style={styles.txtTitle}>
-				{cardBox.title}
+				{cardBox?.title}
 			</TextInput>
 			<Pressable style={styles.btnConfirm}>
 				<Icon style={styles.iconBtnConfirm} name='check'/>

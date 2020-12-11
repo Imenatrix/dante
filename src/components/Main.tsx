@@ -54,19 +54,22 @@ const Main : React.FC = () => {
 	}
 
 	const cardBox = cardBoxes.find(x => x.id == selectedCardBox)
+	const cards = useSelector((state : RootState) => state.cards).filter((card) => card.cardBoxId == selectedCardBox)
 
 	return (
 		<View style={{flex : 1}}>
 			{cardBox != undefined &&
 				<CardBox title={cardBox.title} onBtnSideMenuPress={toggleMenu}>
-					{cardBox.cards.map((card) => (
+					{cards.map((card) => {
+						const tasks = useSelector((state : RootState) => state.tasks).filter(task => task.cardId == card.id)
+						return (
 						<Card key={card.id} title={card.title}>
-							{card.tasks.map((task) => (
+							{tasks.map((task) => (
 								<TaskPod key={task.id} title={task.title} counter={<Counter value={task.timeFlex}/>}/>
 							))}
 							<NewPod/>
 						</Card>
-					))}
+					)})}
 					<NewCard/>
 				</CardBox>
 			}

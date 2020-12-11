@@ -5,19 +5,20 @@ import {
 	StyleSheet
 } from 'react-native'
 import Counter from 'src/components/Counter'
+import { Task } from 'src/reducers/tasksSlice'
 
 interface Props {
-	title : string
+	task : Task
 }
 
 const TaskPod : React.FC<Props> = (props) => {
 
-	const title = props.title
+	const task = props.task
 
 	return (
 		<View style={styles.container}>
-			<TextInput style={styles.txtTitle}>{title}</TextInput>
-			<Counter value={0}/>
+			<TextInput style={styles.txtTitle}>{task.title}</TextInput>
+			<Counter value={task.timeFlex}/>
 		</View>
 	)
 

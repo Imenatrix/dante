@@ -8,15 +8,22 @@ import {
 	View,
 	Dimensions
 } from 'react-native'
+import { useSelector } from 'react-redux'
+import { RootState } from 'src/reducers'
 import Icon from 'react-native-vector-icons/MaterialIcons'
+import TaskPod from 'src/components/TaskPod'
+import NewPod from 'src/components/NewPod'
+import Counter from 'src/components/Counter'
 
 interface Props {
+	id : number,
 	title : string
 }
 
 const Card : React.FC<Props> = (props) => {
 
 	const title = props.title
+	const tasks = useSelector((state : RootState) => state.tasks).filter(task => task.cardId == props.id)
 
 	return (
 		<View style={styles.container}>
@@ -34,7 +41,10 @@ const Card : React.FC<Props> = (props) => {
 				</View>
 			</View>
 			<ScrollView style={styles.podDrawer}>
-				{props.children}
+				{tasks.map((task) => (
+					<TaskPod key={task.id} title={task.title} counter={<Counter value={task.timeFlex}/>}/>
+				))}
+				<NewPod/>
 			</ScrollView>
 		</View>
 	)

@@ -8,7 +8,7 @@ export interface Card {
 
 const cardsSlicer = createSlice({
 	name : 'cards',
-	initialState : new Array<Card>(),
+	initialState : new Array<Card>({id : 0, cardBoxId : 0, title : 'Monday'}),
 	reducers : {
 		add(state, action) {
 			const id = state.length != 0 ? state.map((card : Card) => card.id).sort().reverse()[0] + 1 : 0

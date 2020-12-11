@@ -60,16 +60,9 @@ const Main : React.FC = () => {
 		<View style={{flex : 1}}>
 			{cardBox != undefined &&
 				<CardBox title={cardBox.title} onBtnSideMenuPress={toggleMenu}>
-					{cards.map((card) => {
-						const tasks = useSelector((state : RootState) => state.tasks).filter(task => task.cardId == card.id)
-						return (
-						<Card key={card.id} title={card.title}>
-							{tasks.map((task) => (
-								<TaskPod key={task.id} title={task.title} counter={<Counter value={task.timeFlex}/>}/>
-							))}
-							<NewPod/>
-						</Card>
-					)})}
+					{cards.map((card) => (
+						<Card key={card.id} title={card.title} id={card.id}/>
+					))}
 					<NewCard/>
 				</CardBox>
 			}

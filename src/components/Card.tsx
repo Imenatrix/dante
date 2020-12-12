@@ -26,8 +26,8 @@ const Card : React.FC<Props> = (props) => {
 	const card = props.card
 	const mode = useSelector((state : RootState) => state.mode.value)
 	const tasks = useSelector((state : RootState) => state.tasks).filter(task => task.cardId == card.id)
-	const taskPods = tasks.map((task) => (
-						<TaskPod key={task.id} task={task}/>
+	const taskPods = tasks.map((task, index) => (
+						<TaskPod color={index % 2 == 0 ? 'lightgray' : 'white'} key={task.id} task={task}/>
 					))
 
 	return (

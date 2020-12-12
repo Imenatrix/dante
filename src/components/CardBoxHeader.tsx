@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from 'src/reducers'
 import { remove as removeCardBox, setTitle, CardBox } from 'src/reducers/cardBoxesSlice'
 import { remove as removeCard } from 'src/reducers/cardsSlice'
+import { remove as removeTask } from 'src/reducers/tasksSlice'
 import { go, edit } from 'src/reducers/modeSlice'
 
 const icons = new Map([
@@ -34,6 +35,9 @@ const CardBoxHeader : React.FC<Props> = (props) => {
 	const cardIds = useSelector((state : RootState) => state.cards)
 						.filter(card => card.cardBoxId == cardBox.id)
 						.map(card => card.id)
+	const taskIds = useSelector((state : RootState) => state.tasks)
+						.filter(task => task.cardId in cardIds)
+						.map(task => task.id)
 
 	function handleTxtTitleChange(event : NativeSyntheticEvent<TextInputChangeEventData>) {
 		dispatch(setTitle({
@@ -48,9 +52,15 @@ const CardBoxHeader : React.FC<Props> = (props) => {
 				id : id
 			}))
 		})
+		taskIds.forEach(id => {
+			dispatch(removeTask({
+				id : id
+			}))
+		})
 		dispatch(removeCardBox({
 			id : cardBox.id
 		}))
+		dispatch(go())
 	}
 
 	function toggleEdit() {

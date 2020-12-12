@@ -21,7 +21,7 @@ import { RootState } from 'src/reducers'
 import CardBoxHeader from 'src/components/CardBoxHeader'
 import CardBox from 'src/components/CardBox'
 import CardBoxPodDrawer from 'src/components/CardBoxPodDrawer'
-import { add } from 'src/reducers/cardBoxesSlice'
+import AppHeader from 'src/components/AppHeader'
 
 
 const Main : React.FC = () => {
@@ -67,12 +67,13 @@ const Main : React.FC = () => {
 			{cardBox != undefined ? <>
 				<CardBoxHeader onBtnSideMenuPress={toggleMenu} cardBox={cardBox}/>
 				<CardBox cardBox={cardBox}/>
-			</> :
+			</> : <>
+				<AppHeader onBtnSideMenuPress={toggleMenu}/>
 				<Text style={styles.txtPlaceholder}>
 					You have no card boxes,
 					{'\n'}please create one.
 				</Text>
-			}
+			</> }
 			<CardBoxPodDrawer
 				open={isSideMenuOpen}
 				onSelect={selectCardBox}

@@ -21,6 +21,7 @@ const CardBox : React.FC<Props> = (props) => {
 	const dispatch = useDispatch()
 
 	const cardBox = props.cardBox
+	const mode = useSelector((state : RootState) => state.mode.value)
 	const cards = useSelector((state : RootState) => state.cards).filter(card => card.cardBoxId == cardBox.id)
 
 	return (
@@ -34,7 +35,9 @@ const CardBox : React.FC<Props> = (props) => {
 				{cards.map(card => (
 					<Card key={card.id} card={card}/>
 				))}
-				<NewCard onPress={() => dispatch(add({cardBoxId : cardBox.id}))}/>
+				{mode === 'edit' &&
+					<NewCard onPress={() => dispatch(add({cardBoxId : cardBox.id}))}/>
+				}
 			</ScrollView>
 		</View>
 	)

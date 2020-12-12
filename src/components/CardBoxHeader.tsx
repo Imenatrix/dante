@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
 	View,
 	Pressable,
@@ -23,6 +23,7 @@ const CardBoxHeader : React.FC<Props> = (props) => {
 
 	const dispatch = useDispatch()
 
+	const [edit, setEdit] = useState(false)
 	const cardBox = props.cardBox
 	const cardIds = useSelector((state : RootState) => state.cards)
 						.filter(card => card.cardBoxId == cardBox.id)
@@ -45,20 +46,27 @@ const CardBoxHeader : React.FC<Props> = (props) => {
 			id : cardBox.id
 		}))
 	}
+
+	function toggleEdit() {
+		setEdit(!edit)
+	}
 	
 	return (
 		<View style={styles.container}>
-			<Pressable onPress={props.onBtnSideMenuPress}>
-				<Icon style={styles.icon} name='menu'/>
-			</Pressable>
-			<Pressable onPress={onBtnRemovePress} style={styles.btn}>
-				<Icon name='close' style={styles.icon}/>
-			</Pressable>
+			{edit ?
+				<Pressable onPress={onBtnRemovePress} style={styles.btn}>
+					<Icon name='close' style={styles.icon}/>
+				</Pressable>
+			:
+				<Pressable style={styles.btnMenu} onPress={props.onBtnSideMenuPress}>
+					<Icon style={styles.iconBtnMenu} name='menu'/>
+				</Pressable>
+			}
 			<TextInput onChange={handleTxtTitleChange} style={styles.txtTitle}>
 				{cardBox.title}
 			</TextInput>
-			<Pressable style={styles.btn}>
-				<Icon style={styles.icon} name='check'/>
+			<Pressable onPress={toggleEdit} style={styles.btn}>
+				<Icon style={styles.icon} name={edit ? 'check' : 'edit'}/>
 			</Pressable>
 		</View>
 	)
@@ -72,19 +80,26 @@ const styles = StyleSheet.create({
 		alignItems : 'center',
 		backgroundColor : 'gray',
 		justifyContent : 'space-between',
-		padding : 5,
-		height : 60
+		padding : 10,
 	},
 	btn : {
-		height : '100%',
-		aspectRatio : 1,
-		borderRadius : 9999999999,
+		width : 50,
+		height : 50,
+		borderRadius : 25,
 		backgroundColor : 'green',
 		justifyContent : 'center',
 		alignItems : 'center'
 	},
+	btnMenu : {
+		width : 50,
+		height : 50,
+		justifyContent : 'center',
+	},
 	icon : {
-		fontSize : 40
+		fontSize : 30
+	},
+	iconBtnMenu : {
+		fontSize : 50,
 	},
 	txtTitle : {
 		fontSize : 25,

@@ -30,8 +30,8 @@ const styles = StyleSheet.create({
 		flexDirection : 'row',
 		alignItems : 'center',
 		backgroundColor : 'gray',
-		padding : 5,
-		height : 60
+		padding : 10,
+		height : 70
 	},
 	icon : {
 		fontSize : 40

@@ -5,7 +5,8 @@ import rootReducer from 'src/reducers'
 
 const persistConfig = {
 	key : 'root',
-	storage : AsyncStorage
+	storage : AsyncStorage,
+	blacklist : ['mode']
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

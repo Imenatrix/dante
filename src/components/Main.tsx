@@ -1,12 +1,15 @@
 import React, {
 	useEffect,
+	useLayoutEffect,
 	useState
 } from 'react'
 
 import {
 	BackHandler,
 	GestureResponderEvent,
-	View
+	View,
+	Text,
+	StyleSheet
 } from 'react-native'
 
 import {
@@ -34,6 +37,12 @@ const Main : React.FC = () => {
 		return () => backHandler.remove()
 	}, [])
 
+	useLayoutEffect(() => {
+		if (cardBoxes.find(x => x.id == selectedCardBox) == undefined) {
+			setSelectedCardBox(cardBoxes[0] ? cardBoxes[0].id : 0)
+		}
+	}, [cardBoxes])
+
 	function backAction() {
 		if (isSideMenuOpen) {
 			toggleMenu()
@@ -51,18 +60,19 @@ const Main : React.FC = () => {
 		toggleMenu()
 	}
 
-	if (cardBoxes.length == 0) {
-		dispatch(add({}))
-	}
-	if (cardBoxes.find(x => x.id == selectedCardBox) == undefined) {
-		setSelectedCardBox(0)
-	}
-	const cardBox = cardBoxes.find(x => x.id == selectedCardBox)!
+	const cardBox = cardBoxes.find(x => x.id == selectedCardBox)
 
 	return (
 		<View style={{flex : 1}}>
 			<AppHeader onBtnSideMenuPress={toggleMenu} cardBox={cardBox}/>
-			<CardBox cardBox={cardBox}/>
+			{cardBox != undefined ?
+				<CardBox cardBox={cardBox}/>
+			:
+				<Text style={styles.txtPlaceholder}>
+					You have no card boxes,
+					{'\n'}please create one.
+				</Text>
+			}
 			<CardBoxPodDrawer
 				open={isSideMenuOpen}
 				onSelect={selectCardBox}
@@ -71,5 +81,14 @@ const Main : React.FC = () => {
 	)
 
 }
+
+const styles = StyleSheet.create({
+	txtPlaceholder : {
+		color : 'gray',
+		textAlign : 'center',
+		textAlignVertical : 'center',
+		flex : 1
+	}
+})
 
 export default Main

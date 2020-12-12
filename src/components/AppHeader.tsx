@@ -10,7 +10,7 @@ import {
 } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import { useDispatch } from 'react-redux'
-import { setTitle, CardBox } from 'src/reducers/cardBoxesSlice'
+import { remove, setTitle, CardBox } from 'src/reducers/cardBoxesSlice'
 
 interface Props {
 	cardBox? : CardBox
@@ -31,13 +31,21 @@ const AppHeader : React.FC<Props> = (props) => {
 			}))
 		}
 	}
+
+	function onBtnRemovePress() {
+		if (cardBox != undefined) {
+			dispatch(remove({
+				id : cardBox.id
+			}))
+		}
+	}
 	
 	return (
 		<View style={styles.container}>
 			<Pressable onPress={props.onBtnSideMenuPress}>
 				<Icon style={styles.icon} name='menu'/>
 			</Pressable>
-			<Pressable style={styles.btn}>
+			<Pressable onPress={onBtnRemovePress} style={styles.btn}>
 				<Icon name='close' style={styles.icon}/>
 			</Pressable>
 			<TextInput onChange={handleTxtTitleChange} style={styles.txtTitle}>
@@ -73,6 +81,8 @@ const styles = StyleSheet.create({
 		fontSize : 40
 	},
 	txtTitle : {
-		fontSize : 25
+		fontSize : 25,
+		flex : 1,
+		textAlign : 'center'
 	},
 })

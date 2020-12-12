@@ -17,11 +17,15 @@ const cardBoxesSlice = createSlice({
 			}
 			state.push(cardBox)
 		},
+		remove(state, action) {
+			const index = state.indexOf(state.find(cardBox => cardBox.id == action.payload.id)!)
+			state.splice(index, 1)
+		},
 		setTitle(state, action) {
 			state.find(cardBox => cardBox.id == action.payload.id)!.title = action.payload.value
 		}
 	}
 })
 
-export const { add, setTitle } = cardBoxesSlice.actions
+export const { add, remove, setTitle } = cardBoxesSlice.actions
 export default cardBoxesSlice.reducer

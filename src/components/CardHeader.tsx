@@ -12,8 +12,10 @@ import {
 } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import TimePicker from '@react-native-community/datetimepicker'
-import { useDispatch } from 'react-redux'
-import { Card, remove, setTitle, setEndTime } from 'src/reducers/cardsSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from 'src/reducers'
+import { Card, remove as removeCard, setTitle, setEndTime } from 'src/reducers/cardsSlice'
+import { remove as removeTask } from 'src/reducers/tasksSlice'
 
 interface Props {
 	card : Card
@@ -24,6 +26,9 @@ const CardHeader : React.FC<Props> = (props) => {
 	const dispatch = useDispatch()
 	
 	const card = props.card
+	const taskIds = useSelector((state : RootState) => state.tasks)
+		.filter(task => task.cardId == card.id)
+		.map(task => task.id)
 	const [isTimePickerOpen, setIsTimePickerOpen] = useState(false)
 
 	function handleTxtTitleChange(event : NativeSyntheticEvent<TextInputChangeEventData>) {
@@ -44,7 +49,12 @@ const CardHeader : React.FC<Props> = (props) => {
 	}
 
 	function onBtnRemovePress() {
-		dispatch(remove({
+		taskIds.forEach(id => {
+			dispatch(removeTask({
+				id : id
+			}))
+		})
+		dispatch(removeCard({
 			id : card.id
 		}))
 	}

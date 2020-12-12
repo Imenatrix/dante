@@ -26,6 +26,7 @@ const CardHeader : React.FC<Props> = (props) => {
 	const dispatch = useDispatch()
 	
 	const card = props.card
+	const mode = useSelector((state : RootState) => state.mode.value)
 	const taskIds = useSelector((state : RootState) => state.tasks)
 						.filter(task => task.cardId == card.id)
 						.map(task => task.id)
@@ -64,20 +65,24 @@ const CardHeader : React.FC<Props> = (props) => {
 			{isTimePickerOpen &&
 				<TimePicker onChange={handleTimePickerChange} value={new Date(card.endTime)} mode='time'/>
 			}
-			<Pressable onPress={() => setIsTimePickerOpen(true)} style={styles.btnEndTime}>
-				<Icon style={styles.iconBtnEndTime} name='schedule'/>
-			</Pressable>
+			{mode === 'edit' &&
+				<Pressable onPress={() => setIsTimePickerOpen(true)} style={styles.btnEndTime}>
+					<Icon style={styles.iconBtnEndTime} name='schedule'/>
+				</Pressable>
+			}
 			<View style={styles.headerText}>
-				<TextInput onChange={handleTxtTitleChange} style={styles.txtTitle}>
+				<TextInput editable={mode === 'edit'} onChange={handleTxtTitleChange} style={styles.txtTitle}>
 					{card.title}
 				</TextInput>
 				<Text style={styles.txtEndTime}>
 					Ends at: {new Date(card.endTime).toLocaleTimeString().slice(0, -3)}
 				</Text>
 			</View>
-			<Pressable onPress={onBtnRemovePress} style={styles.btnEndTime}>
-				<Icon style={styles.iconBtnEndTime} name='close'/>
-			</Pressable>
+			{mode === 'edit' && 
+				<Pressable onPress={onBtnRemovePress} style={styles.btnEndTime}>
+					<Icon style={styles.iconBtnEndTime} name='close'/>
+				</Pressable>
+			}
 		</View>
 	)
 }
@@ -108,6 +113,7 @@ const styles = StyleSheet.create({
 	},
 	txtTitle : {
 		fontSize : 30,
+		color : 'black'
 	},
 	txtEndTime : {
 		marginTop : -10,

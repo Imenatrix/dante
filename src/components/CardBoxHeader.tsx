@@ -74,7 +74,7 @@ const CardBoxHeader : React.FC<Props> = (props) => {
 					<Icon style={styles.iconBtnMenu} name='menu'/>
 				</Pressable>
 			}
-			<TextInput onChange={handleTxtTitleChange} style={styles.txtTitle}>
+			<TextInput editable={mode === 'edit'} onChange={handleTxtTitleChange} style={styles.txtTitle}>
 				{cardBox.title}
 			</TextInput>
 			<Pressable onPress={toggleEdit} style={styles.btn}>
@@ -116,6 +116,7 @@ const styles = StyleSheet.create({
 	txtTitle : {
 		fontSize : 25,
 		flex : 1,
-		textAlign : 'center'
+		textAlign : 'center',
+		color : 'black'
 	},
 })

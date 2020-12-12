@@ -35,7 +35,7 @@ const Main : React.FC = () => {
 	useEffect(() => {
 		const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction)
 		return () => backHandler.remove()
-	}, [])
+	})
 
 	useLayoutEffect(() => {
 		if (cardBoxes.find(x => x.id == selectedCardBox) == undefined) {

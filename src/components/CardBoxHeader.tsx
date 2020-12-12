@@ -13,6 +13,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from 'src/reducers'
 import { remove as removeCardBox, setTitle, CardBox } from 'src/reducers/cardBoxesSlice'
 import { remove as removeCard } from 'src/reducers/cardsSlice'
+import { go, edit } from 'src/reducers/modeSlice'
+
+const icons = new Map([
+	['go', 'edit'],
+	['edit', 'check']
+])
 
 interface Props {
 	cardBox : CardBox
@@ -23,7 +29,7 @@ const CardBoxHeader : React.FC<Props> = (props) => {
 
 	const dispatch = useDispatch()
 
-	const [edit, setEdit] = useState(false)
+	const mode = useSelector((state : RootState) => state.mode.value)
 	const cardBox = props.cardBox
 	const cardIds = useSelector((state : RootState) => state.cards)
 						.filter(card => card.cardBoxId == cardBox.id)
@@ -48,16 +54,22 @@ const CardBoxHeader : React.FC<Props> = (props) => {
 	}
 
 	function toggleEdit() {
-		setEdit(!edit)
+		if (mode === 'go') {
+			dispatch(edit())
+		}
+		else if (mode === 'edit') {
+			dispatch(go())
+		}
 	}
 	
 	return (
 		<View style={styles.container}>
-			{edit ?
+			{mode === 'edit' &&
 				<Pressable onPress={onBtnRemovePress} style={styles.btn}>
 					<Icon name='close' style={styles.icon}/>
 				</Pressable>
-			:
+			}
+			{mode === 'go' &&
 				<Pressable style={styles.btnMenu} onPress={props.onBtnSideMenuPress}>
 					<Icon style={styles.iconBtnMenu} name='menu'/>
 				</Pressable>
@@ -66,7 +78,7 @@ const CardBoxHeader : React.FC<Props> = (props) => {
 				{cardBox.title}
 			</TextInput>
 			<Pressable onPress={toggleEdit} style={styles.btn}>
-				<Icon style={styles.icon} name={edit ? 'check' : 'edit'}/>
+				<Icon style={styles.icon} name={icons.get(mode)!}/>
 			</Pressable>
 		</View>
 	)

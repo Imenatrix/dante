@@ -2,13 +2,14 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const modeSlice = createSlice({
 	name : 'mode',
-	initialState : 'go',
+	initialState : {value : 'go'},
 	reducers : {
 		go(state) {
-			state = 'go'
+			state.value = 'go'
 		},
 		edit(state) {
-			state = 'edit'
+			console.log('coiso')
+			state.value = 'edit'
 		}
 	}
 })

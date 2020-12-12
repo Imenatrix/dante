@@ -26,23 +26,27 @@ const Card : React.FC<Props> = (props) => {
 	const card = props.card
 	const mode = useSelector((state : RootState) => state.mode.value)
 	const tasks = useSelector((state : RootState) => state.tasks).filter(task => task.cardId == card.id)
+	const taskPods = tasks.map((task) => (
+						<TaskPod key={task.id} task={task}/>
+					))
 
 	return (
 		<View style={styles.container}>
 			<CardHeader card={card}/>
-			<ScrollView style={styles.podDrawer}>
-				{tasks.map((task) => (
-					<TaskPod key={task.id} task={task}/>
-				))}
-				{mode === 'edit' &&
+			{mode === 'edit' &&
+				<ScrollView style={styles.podDrawer}>
+					{taskPods}
 					<NewPod onPress={() => dispatch(add({cardId : card.id}))}/>
-				}
-			</ScrollView>
-			{mode === 'go' &&
+				</ScrollView>
+			}
+			{mode === 'go' && <>
+				<View style={styles.podDisplay}>
+					{taskPods}
+				</View>
 				<Pressable style={styles.btnGo}>
 					<Icon style={styles.iconBtnGo} name='play-arrow'/>
 				</Pressable>
-			}
+			</> }
 		</View>
 	)
 
@@ -62,6 +66,10 @@ const styles = StyleSheet.create({
 	podDrawer : {
 		paddingVertical : 5,
 		backgroundColor : 'lightgray'
+	},
+	podDisplay : {
+		backgroundColor : 'lightgray',
+		flex : 1
 	},
 	btnGo : {
 		height : 60,

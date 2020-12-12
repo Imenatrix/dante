@@ -27,8 +27,8 @@ const CardHeader : React.FC<Props> = (props) => {
 	
 	const card = props.card
 	const taskIds = useSelector((state : RootState) => state.tasks)
-		.filter(task => task.cardId == card.id)
-		.map(task => task.id)
+						.filter(task => task.cardId == card.id)
+						.map(task => task.id)
 	const [isTimePickerOpen, setIsTimePickerOpen] = useState(false)
 
 	function handleTxtTitleChange(event : NativeSyntheticEvent<TextInputChangeEventData>) {

@@ -9,8 +9,10 @@ import {
 	TextInputChangeEventData
 } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
-import { useDispatch } from 'react-redux'
-import { remove, setTitle, CardBox } from 'src/reducers/cardBoxesSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from 'src/reducers'
+import { remove as removeCardBox, setTitle, CardBox } from 'src/reducers/cardBoxesSlice'
+import { remove as removeCard } from 'src/reducers/cardsSlice'
 
 interface Props {
 	cardBox : CardBox
@@ -22,6 +24,9 @@ const CardBoxHeader : React.FC<Props> = (props) => {
 	const dispatch = useDispatch()
 
 	const cardBox = props.cardBox
+	const cardIds = useSelector((state : RootState) => state.cards)
+						.filter(card => card.cardBoxId == cardBox.id)
+						.map(card => card.id)
 
 	function handleTxtTitleChange(event : NativeSyntheticEvent<TextInputChangeEventData>) {
 		dispatch(setTitle({
@@ -31,7 +36,12 @@ const CardBoxHeader : React.FC<Props> = (props) => {
 	}
 
 	function onBtnRemovePress() {
-		dispatch(remove({
+		cardIds.forEach(id => {
+			dispatch(removeCard({
+				id : id
+			}))
+		})
+		dispatch(removeCardBox({
 			id : cardBox.id
 		}))
 	}

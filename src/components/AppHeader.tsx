@@ -15,7 +15,7 @@ interface Props {
 const AppHeader : React.FC<Props> = (props) => {
 	return (
 		<View style={styles.container}>
-			<Pressable onPress={props.onBtnSideMenuPress}>
+			<Pressable style={styles.btn} onPress={props.onBtnSideMenuPress}>
 				<Icon style={styles.icon} name='menu'/>
 			</Pressable>
 			<Text style={styles.txtTitle}>Welcome to Dante!</Text>
@@ -31,10 +31,13 @@ const styles = StyleSheet.create({
 		alignItems : 'center',
 		backgroundColor : 'gray',
 		padding : 10,
-		height : 70
+	},
+	btn : {
+		width : 50,
+		height : 50
 	},
 	icon : {
-		fontSize : 40
+		fontSize : 50
 	},
 	txtTitle : {
 		fontSize : 23,

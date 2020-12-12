@@ -18,7 +18,7 @@ import {
 } from 'react-redux'
 
 import { RootState } from 'src/reducers'
-import AppHeader from 'src/components/AppHeader'
+import CardBoxHeader from 'src/components/CardBoxHeader'
 import CardBox from 'src/components/CardBox'
 import CardBoxPodDrawer from 'src/components/CardBoxPodDrawer'
 import { add } from 'src/reducers/cardBoxesSlice'
@@ -64,10 +64,10 @@ const Main : React.FC = () => {
 
 	return (
 		<View style={{flex : 1}}>
-			<AppHeader onBtnSideMenuPress={toggleMenu} cardBox={cardBox}/>
-			{cardBox != undefined ?
+			{cardBox != undefined ? <>
+				<CardBoxHeader onBtnSideMenuPress={toggleMenu} cardBox={cardBox}/>
 				<CardBox cardBox={cardBox}/>
-			:
+			</> :
 				<Text style={styles.txtPlaceholder}>
 					You have no card boxes,
 					{'\n'}please create one.

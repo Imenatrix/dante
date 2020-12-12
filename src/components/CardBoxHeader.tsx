@@ -13,31 +13,27 @@ import { useDispatch } from 'react-redux'
 import { remove, setTitle, CardBox } from 'src/reducers/cardBoxesSlice'
 
 interface Props {
-	cardBox? : CardBox
+	cardBox : CardBox
 	onBtnSideMenuPress : (event : GestureResponderEvent) => void
 }
 
-const AppHeader : React.FC<Props> = (props) => {
+const CardBoxHeader : React.FC<Props> = (props) => {
 
 	const dispatch = useDispatch()
 
 	const cardBox = props.cardBox
 
 	function handleTxtTitleChange(event : NativeSyntheticEvent<TextInputChangeEventData>) {
-		if (cardBox != undefined) {
-			dispatch(setTitle({
-				id : cardBox.id,
-				value : event.nativeEvent.text
-			}))
-		}
+		dispatch(setTitle({
+			id : cardBox.id,
+			value : event.nativeEvent.text
+		}))
 	}
 
 	function onBtnRemovePress() {
-		if (cardBox != undefined) {
-			dispatch(remove({
-				id : cardBox.id
-			}))
-		}
+		dispatch(remove({
+			id : cardBox.id
+		}))
 	}
 	
 	return (
@@ -49,7 +45,7 @@ const AppHeader : React.FC<Props> = (props) => {
 				<Icon name='close' style={styles.icon}/>
 			</Pressable>
 			<TextInput onChange={handleTxtTitleChange} style={styles.txtTitle}>
-				{cardBox?.title}
+				{cardBox.title}
 			</TextInput>
 			<Pressable style={styles.btn}>
 				<Icon style={styles.icon} name='check'/>
@@ -58,7 +54,7 @@ const AppHeader : React.FC<Props> = (props) => {
 	)
 }
 
-export default AppHeader
+export default CardBoxHeader
 
 const styles = StyleSheet.create({
 	container : {

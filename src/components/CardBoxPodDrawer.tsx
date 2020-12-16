@@ -6,9 +6,11 @@ import { RootState } from 'src/reducers'
 import CardBoxPod from 'src/components/CardBoxPod'
 import SideMenu from 'src/components/SideMenu'
 import NewPod from 'src/components/NewPod'
+import { edit } from 'src/reducers/modeSlice'
 
 interface Props {
 	open : boolean,
+	toggleOpen : Function
 	onBackgroundPress : (event : GestureResponderEvent) => void,
 	onSelect : (event : GestureResponderEvent, selected : number) => void
 }
@@ -24,7 +26,11 @@ const CardBoxPodDrawer : React.FC<Props> = (props) => {
 			{cardBoxes.map((cardBox) => (
 				<CardBoxPod onPress={(event) => props.onSelect(event, cardBox.id)} key={cardBox.id} title={cardBox.title}/>
 			))}
-			<NewPod onPress={() => dispatch(add({}))}/>
+			<NewPod onPress={() => {
+				props.toggleOpen()
+				dispatch(add({}))
+				dispatch(edit())
+			}}/>
 		</SideMenu>
 	)
 }

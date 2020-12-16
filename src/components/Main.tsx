@@ -76,6 +76,7 @@ const Main : React.FC = () => {
 			</> }
 			<CardBoxPodDrawer
 				open={isSideMenuOpen}
+				toggleOpen={toggleMenu}
 				onSelect={selectCardBox}
 				onBackgroundPress={toggleMenu}/>
 		</View>

@@ -8,7 +8,6 @@ const modeSlice = createSlice({
 			state.value = 'go'
 		},
 		edit(state) {
-			console.log('coiso')
 			state.value = 'edit'
 		}
 	}

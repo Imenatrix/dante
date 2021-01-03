@@ -24,9 +24,13 @@ const CompletionWarning : React.FC<Props> = (props) => {
                 <View/>
                     <Text style={styles.txt}>{props.task.title}</Text>
                 <View style={styles.buttonGroup}>
-                    <Pressable style={styles.btnContinue} onPress={props.onBtnContinuePress}/>
+                    <Pressable style={styles.btnContinue} onPress={props.onBtnContinuePress}>
+                        <Text>Start next task</Text>
+                    </Pressable>
                     <View style={{width : 5}}/>
-                    <Pressable style={styles.btnPause} onPress={props.onBtnPausePress}/>
+                    <Pressable style={styles.btnPause} onPress={props.onBtnPausePress}>
+                        <Text>Pause card</Text>
+                    </Pressable>
                 </View>
             </View>
         </Modal>
@@ -63,12 +67,16 @@ const styles = StyleSheet.create({
         height : 50,
         flex : 1,
         backgroundColor : 'red',
-        borderRadius : 5
+        borderRadius : 5,
+        justifyContent : 'center',
+        alignItems : 'center'
     },
     btnContinue : {
         height : 50,
         flex : 1,
         backgroundColor : 'green',
-        borderRadius : 5
+        borderRadius : 5,
+        justifyContent : 'center',
+        alignItems : 'center'
     }
 })

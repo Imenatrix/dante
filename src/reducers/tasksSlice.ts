@@ -44,9 +44,13 @@ const tasksSlice = createSlice({
 		finish(state, action) {
 			state.find(task => task.id == action.payload.id)!.running = false
 			state.find(task => task.id == action.payload.id)!.complete = true
+		},
+		reset(state, action) {
+			state.find(task => task.id == action.payload.id)!.running = false
+			state.find(task => task.id == action.payload.id)!.complete = false
 		}
 	}
 })
 
-export const { add, remove, setTitle, addToTimeFlex, setComplete, start, finish } = tasksSlice.actions
+export const { add, remove, setTitle, addToTimeFlex, setComplete, start, finish, reset } = tasksSlice.actions
 export default tasksSlice.reducer

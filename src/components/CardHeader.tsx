@@ -8,14 +8,14 @@ import {
 	TextInput,
 	StyleSheet,
 	NativeSyntheticEvent,
-	TextInputChangeEventData
+	TextInputChangeEventData,
 } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import TimePicker from '@react-native-community/datetimepicker'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from 'src/reducers'
 import { Card, remove as removeCard, setTitle, setEndTime } from 'src/reducers/cardsSlice'
-import { remove as removeTask } from 'src/reducers/tasksSlice'
+import { remove as removeTask, reset} from 'src/reducers/tasksSlice'
 
 interface Props {
 	card : Card
@@ -60,15 +60,25 @@ const CardHeader : React.FC<Props> = (props) => {
 		}))
 	}
 
+	function resetTasks() {
+		taskIds.forEach(id => {
+			dispatch(reset({
+				id : id
+			}))
+		})
+	}
+
 	return (
 		<View style={styles.container}>
 			{isTimePickerOpen &&
 				<TimePicker onChange={handleTimePickerChange} value={new Date(card.endTime)} mode='time'/>
 			}
-			{mode === 'edit' &&
+			{mode === 'edit' ?
 				<Pressable onPress={() => setIsTimePickerOpen(true)} style={styles.btnEndTime}>
 					<Icon style={styles.iconBtnEndTime} name='schedule'/>
 				</Pressable>
+			:
+				<View style={{width : 50}}/>
 			}
 			<View style={styles.headerText}>
 				<TextInput editable={mode === 'edit'} onChange={handleTxtTitleChange} style={styles.txtTitle}>
@@ -78,9 +88,13 @@ const CardHeader : React.FC<Props> = (props) => {
 					Ends at: {new Date(card.endTime).toLocaleTimeString().slice(0, -3)}
 				</Text>
 			</View>
-			{mode === 'edit' && 
+			{mode === 'edit' ? 
 				<Pressable onPress={onBtnRemovePress} style={styles.btnEndTime}>
 					<Icon style={styles.iconBtnEndTime} name='close'/>
+				</Pressable>
+			:
+				<Pressable onPress={resetTasks} style={styles.btnEndTime}>
+					<Icon style={styles.iconBtnEndTime} name='refresh'/>
 				</Pressable>
 			}
 		</View>

@@ -60,9 +60,11 @@ const TaskPod : React.FC<Props> = (props) => {
 		<View style={[styles.container, mode === 'edit' ? {margin : 5, borderRadius : 5} : {flex : task.timeFlex, backgroundColor : props.color}]}>
 			{mode === 'go' &&
 				<>
+					{(task.complete || task.running) &&
 					<View style={styles.completionMeterContainer}>
 						<Animated.View style={[styles.completionTimer, {flex : completion}]}/>
 					</View>
+					}
 					<Text style={styles.txtTitle} adjustsFontSizeToFit>{task.title}</Text>
 				</>
 			}

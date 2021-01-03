@@ -51,6 +51,21 @@ const TaskPod : React.FC<Props> = (props) => {
 	}
 
 	useEffect(() => {
+		if (!task.running && !task.complete) {
+			completion.setValue(0)
+		}
+	}, [task.running, task.complete])
+
+	useEffect(() => {
+		completion.addListener(() => {
+			console.log('ok')
+		})
+		return () => {
+			completion.removeAllListeners()
+		}
+	}, [])
+
+	useEffect(() => {
 		if (task.running) {
 			start()
 		}

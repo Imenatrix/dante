@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
 	ScrollView,
 	StyleSheet,
@@ -11,7 +11,7 @@ import { RootState } from 'src/reducers'
 import TaskPod from 'src/components/TaskPod'
 import NewPod from 'src/components/NewPod'
 import { Card as ICard } from 'src/reducers/cardsSlice'
-import { add } from 'src/reducers/tasksSlice'
+import { add, setComplete, Task } from 'src/reducers/tasksSlice'
 import CardHeader from 'src/components/CardHeader'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import CompletionWarning from 'src/components/CompletionWarning'
@@ -31,11 +31,38 @@ const Card : React.FC<Props> = (props) => {
 	const taskPods = tasks.map((task, index) => (
 						<TaskPod color={index % 2 == 0 ? 'lightgray' : 'white'} key={task.id} task={task}/>
 					))
+	const nextTask = tasks.filter(task => !task.complete)[0]
+	const [lastFinishedTask, setLastFinishedTask] = useState<Task>()
 
-	const currentTask = tasks[0]
+	function startNextTask() {
+		if (nextTask != undefined) {
+			dispatch(setComplete({
+				id : nextTask.id,
+				value : true
+			}))
+			setLastFinishedTask(nextTask)
+			setShowModal(true)
+		}
+	}
+
+	function modalContinue() {
+		setShowModal(false)
+		startNextTask()
+	}
+
+	function modalPause() {
+		setShowModal(false)
+	}
+
+	function onBtnGoPress() {
+		startNextTask()
+	}
+
 	return (
 		<View style={styles.container}>
-			<CompletionWarning task={currentTask} visible={showModal} onBtnPausePress={() => setShowModal(false)}/>
+			{lastFinishedTask != undefined &&
+				<CompletionWarning visible={showModal} task={lastFinishedTask} onBtnContinuePress={modalContinue} onBtnPausePress={modalPause}/>
+			}
 			<CardHeader card={card}/>
 			{mode === 'edit' &&
 				<ScrollView style={styles.podDrawer}>
@@ -47,7 +74,7 @@ const Card : React.FC<Props> = (props) => {
 				<View style={styles.podDisplay}>
 					{taskPods}
 				</View>
-				<Pressable style={styles.btnGo} onPress={() => setShowModal(true)}>
+				<Pressable style={styles.btnGo} onPress={onBtnGoPress}>
 					<Icon style={styles.iconBtnGo} name='play-arrow'/>
 				</Pressable>
 			</> }

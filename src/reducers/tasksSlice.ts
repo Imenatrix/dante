@@ -39,5 +39,5 @@ const tasksSlice = createSlice({
 	}
 })
 
-export const { add, remove, setTitle, addToTimeFlex } = tasksSlice.actions
+export const { add, remove, setTitle, addToTimeFlex, setComplete } = tasksSlice.actions
 export default tasksSlice.reducer

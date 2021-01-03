@@ -12,7 +12,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux'
 import Counter from 'src/components/Counter'
 import { RootState } from 'src/reducers'
-import { Task, setTitle, finish } from 'src/reducers/tasksSlice'
+import { Task, setTitle, finish, setElapsedTime } from 'src/reducers/tasksSlice'
 
 interface Props {
 	task : Task,
@@ -58,7 +58,10 @@ const TaskPod : React.FC<Props> = (props) => {
 
 	useEffect(() => {
 		completion.addListener(() => {
-			console.log('ok')
+			dispatch(setElapsedTime({
+				id : task.id,
+				value : (completion as any)._value
+			}))
 		})
 		return () => {
 			completion.removeAllListeners()

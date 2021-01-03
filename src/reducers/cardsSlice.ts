@@ -1,26 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-class EndTime {
-
-	hour : number
-	minute : number
-
-	constructor() {
-		this.hour = 0
-		this.minute = 0
-	}
-	
-	toString() {
-		const zeroH = this.hour < 10 ? '0' : ''
-		const zeroM = this.minute < 10 ? '0' : ''
-		return zeroH + this.hour + ':' + zeroM + this.minute
-	}
-}
-
 export interface Card {
 	id : number,
 	cardBoxId : number,
-	endTime : EndTime
+	endTime : {
+		hour : number,
+		minute : number
+	}
 	title : string,
 }
 
@@ -32,7 +18,10 @@ const cardsSlicer = createSlice({
 			const id = state.length != 0 ? state.map((card : Card) => card.id).sort((a : number, b : number) => a - b).reverse()[0] + 1 : 0
 			const card : Card = {
 				id : id,
-				endTime : new EndTime(),
+				endTime : {
+					hour : 0,
+					minute : 0
+				},
 				cardBoxId : action.payload.cardBoxId,
 				title : 'New Card'
 			}
@@ -46,9 +35,7 @@ const cardsSlicer = createSlice({
 			state.find(card => card.id == action.payload.id)!.title = action.payload.value
 		},
 		setEndTime(state, action) {
-			const endTime = state.find(card => card.id == action.payload.id)!.endTime
-			endTime.hour = action.payload.hour
-			endTime.minute = action.payload.minute
+			state.find(card => card.id == action.payload.id)!.endTime = action.payload.value
 		}
 	}
 })

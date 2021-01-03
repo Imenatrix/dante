@@ -44,8 +44,10 @@ const CardHeader : React.FC<Props> = (props) => {
 		if (date != undefined) {
 			dispatch(setEndTime({
 				id : card.id,
-				hour : date.getHours(),
-				minute : date.getMinutes(),
+				value : {
+					hour : date.getHours(),
+					minute : date.getMinutes(),
+				}
 			}))
 		}
 	}
@@ -86,7 +88,7 @@ const CardHeader : React.FC<Props> = (props) => {
 					{card.title}
 				</TextInput>
 				<Text style={styles.txtEndTime}>
-					Ends at: {card.endTime.toString()}
+					Ends at: {stringfy(card.endTime)}
 				</Text>
 			</View>
 			{mode === 'edit' ? 
@@ -134,3 +136,9 @@ const styles = StyleSheet.create({
 		marginTop : -10,
 	},
 })
+
+function stringfy(endTime : {hour : number, minute : number}) {
+	const zeroH = endTime.hour < 10 ? '0' : ''
+	const zeroM = endTime.minute < 10 ? '0' : ''
+	return zeroH + endTime.hour + ':' + zeroM + endTime.minute
+}

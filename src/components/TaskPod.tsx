@@ -12,7 +12,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux'
 import Counter from 'src/components/Counter'
 import { RootState } from 'src/reducers'
-import { Task, setTitle, finish, setElapsedTime } from 'src/reducers/tasksSlice'
+import { Task, setTitle, finish, setElapsedTime, pause } from 'src/reducers/tasksSlice'
 
 interface Props {
 	task : Task,
@@ -44,11 +44,18 @@ const TaskPod : React.FC<Props> = (props) => {
 			toValue: 1,
 			duration: duration,
 			easing : Easing.linear
-		}).start(() => {
-			onFinishedTask(task)
-			dispatch(finish({
-				id : task.id
-			}))
+		}).start(({finished}) => {
+			if (finished) {
+				onFinishedTask(task)
+				dispatch(finish({
+					id : task.id
+				}))
+			}
+			else {
+				dispatch(pause({
+					id : task.id
+				}))
+			}
 		});
 	}
 	

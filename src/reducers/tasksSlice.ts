@@ -43,6 +43,9 @@ const tasksSlice = createSlice({
 		start(state, action) {
 			state.find(task => task.id == action.payload.id)!.running = true
 		},
+		pause(state, action) {
+			state.find(task => task.id == action.payload.id)!.running = false
+		},
 		finish(state, action) {
 			state.find(task => task.id == action.payload.id)!.running = false
 			state.find(task => task.id == action.payload.id)!.complete = true
@@ -69,6 +72,7 @@ export const {
 	start,
 	finish,
 	reset,
-	setElapsedTime
+	setElapsedTime,
+	pause
 } = tasksSlice.actions
 export default tasksSlice.reducer

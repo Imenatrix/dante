@@ -27,20 +27,22 @@ const TaskPod : React.FC<Props> = (props) => {
 	const task = props.task
 	const onFinishedTask = props.onFinishedTask
 	const mode = useSelector((state : RootState) => state.mode.value)
+	const cardEndTime = new Date(useSelector((state : RootState) => state.cards.find(card => card.id == task.cardId))!.endTime)
+	const totalTimeFlex = useSelector((state : RootState) => state.tasks.filter(sister => sister.cardId == task.cardId)).map(task => task.timeFlex).reduce((a, b) => a + b)
 	const completion = useRef(new Animated.Value(0)).current
-
+	
 	function handleTxtTileChange(event : NativeSyntheticEvent<TextInputChangeEventData>) {
 		dispatch(setTitle({
 			id : task.id,
 			value : event.nativeEvent.text
 		}))
 	}
-
-	function start() {
+	
+	function start(duration : number) {
 		Animated.timing(completion, {
 			useNativeDriver : false,
 			toValue: 1,
-			duration: 5000,
+			duration: duration,
 			easing : Easing.linear
 		}).start(() => {
 			onFinishedTask(task)
@@ -49,13 +51,13 @@ const TaskPod : React.FC<Props> = (props) => {
 			}))
 		});
 	}
-
+	
 	useEffect(() => {
 		if (!task.running && !task.complete) {
 			completion.setValue(0)
 		}
 	}, [task.running, task.complete])
-
+	
 	useEffect(() => {
 		completion.addListener(() => {
 			dispatch(setElapsedTime({
@@ -67,10 +69,13 @@ const TaskPod : React.FC<Props> = (props) => {
 			completion.removeAllListeners()
 		}
 	}, [])
-
+	
 	useEffect(() => {
 		if (task.running) {
-			start()
+			const endTime = new Date().setHours(cardEndTime.getHours(), cardEndTime.getMinutes(), cardEndTime.getSeconds(), cardEndTime.getMilliseconds())
+			const duration = (endTime - Date.now()) * (task.timeFlex / totalTimeFlex)
+			console.log(duration)
+			start(duration)
 		}
 	}, [task.running])
 

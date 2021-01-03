@@ -1,20 +1,23 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import {
 	View,
 	TextInput,
 	StyleSheet,
 	Text,
 	NativeSyntheticEvent,
-	TextInputChangeEventData
+	TextInputChangeEventData,
+	Animated,
+	Easing,
 } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import Counter from 'src/components/Counter'
 import { RootState } from 'src/reducers'
-import { Task, setTitle } from 'src/reducers/tasksSlice'
+import { Task, setTitle, finish } from 'src/reducers/tasksSlice'
 
 interface Props {
 	task : Task,
-	color : string
+	color : string,
+	onFinishedTask : (task : Task) => void
 }
 
 const TaskPod : React.FC<Props> = (props) => {
@@ -22,7 +25,9 @@ const TaskPod : React.FC<Props> = (props) => {
 	const dispatch = useDispatch()
 
 	const task = props.task
+	const onFinishedTask = props.onFinishedTask
 	const mode = useSelector((state : RootState) => state.mode.value)
+	const completion = useRef(new Animated.Value(0)).current
 
 	function handleTxtTileChange(event : NativeSyntheticEvent<TextInputChangeEventData>) {
 		dispatch(setTitle({
@@ -31,10 +36,35 @@ const TaskPod : React.FC<Props> = (props) => {
 		}))
 	}
 
+	function start() {
+		Animated.timing(completion, {
+			useNativeDriver : false,
+			toValue: 1,
+			duration: 5000,
+			easing : Easing.linear
+		}).start(() => {
+			onFinishedTask(task)
+			dispatch(finish({
+				id : task.id
+			}))
+		});
+	}
+
+	useEffect(() => {
+		if (task.running) {
+			start()
+		}
+	}, [task.running])
+
 	return (
-		<View style={[styles.container, mode === 'edit' ? {margin : 5, borderRadius : 5} : {flex : task.timeFlex, backgroundColor :props.color}]}>
+		<View style={[styles.container, mode === 'edit' ? {margin : 5, borderRadius : 5} : {flex : task.timeFlex, backgroundColor : props.color}]}>
 			{mode === 'go' &&
-				<Text style={styles.txtTitle} adjustsFontSizeToFit>{task.title}</Text>
+				<>
+					<View style={styles.completionMeterContainer}>
+						<Animated.View style={[styles.completionTimer, {flex : completion}]}/>
+					</View>
+					<Text style={styles.txtTitle} adjustsFontSizeToFit>{task.title}</Text>
+				</>
 			}
 			{mode === 'edit' && <>
 				<TextInput onChange={handleTxtTileChange} style={styles.txtTitle}>{task.title}</TextInput>
@@ -53,9 +83,18 @@ const styles = StyleSheet.create({
 		alignItems : 'center',
 		justifyContent : 'space-between',
 		backgroundColor : 'gray',
-		padding : 5
 	},
 	txtTitle : {
-		fontSize : 20
+		fontSize : 20,
+		marginLeft : 5
+	},
+	completionMeterContainer : {
+		position : 'absolute',
+		flexDirection : 'row',
+		width : '100%',
+		height : '100%'
+	},
+	completionTimer : {
+		backgroundColor : 'yellow'
 	}
 })

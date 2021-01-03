@@ -11,7 +11,7 @@ import { RootState } from 'src/reducers'
 import TaskPod from 'src/components/TaskPod'
 import NewPod from 'src/components/NewPod'
 import { Card as ICard } from 'src/reducers/cardsSlice'
-import { add, setComplete, Task } from 'src/reducers/tasksSlice'
+import { add, start, Task } from 'src/reducers/tasksSlice'
 import CardHeader from 'src/components/CardHeader'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import CompletionWarning from 'src/components/CompletionWarning'
@@ -29,33 +29,31 @@ const Card : React.FC<Props> = (props) => {
 	const mode = useSelector((state : RootState) => state.mode.value)
 	const tasks = useSelector((state : RootState) => state.tasks).filter(task => task.cardId == card.id)
 	const taskPods = tasks.map((task, index) => (
-						<TaskPod color={index % 2 == 0 ? 'lightgray' : 'white'} key={task.id} task={task}/>
+						<TaskPod onFinishedTask={onFinishedTask} color={index % 2 == 0 ? 'lightgray' : 'white'} key={task.id} task={task}/>
 					))
 	const nextTask = tasks.filter(task => !task.complete)[0]
 	const [lastFinishedTask, setLastFinishedTask] = useState<Task>()
 
-	function startNextTask() {
-		if (nextTask != undefined) {
-			dispatch(setComplete({
-				id : nextTask.id,
-				value : true
-			}))
-			setLastFinishedTask(nextTask)
-			setShowModal(true)
-		}
+	function onFinishedTask(task : Task) {
+		setShowModal(true)
+		setLastFinishedTask(task)
 	}
 
 	function modalContinue() {
+		onBtnGoPress()
 		setShowModal(false)
-		startNextTask()
 	}
-
+	
 	function modalPause() {
 		setShowModal(false)
 	}
 
 	function onBtnGoPress() {
-		startNextTask()
+		if (nextTask != undefined) {
+			dispatch(start({
+				id : nextTask.id
+			}))
+		}
 	}
 
 	return (

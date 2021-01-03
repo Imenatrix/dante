@@ -5,7 +5,8 @@ export interface Task {
 	cardId : number,
 	title : string,
 	timeFlex : number,
-	complete : boolean
+	complete : boolean,
+	running : boolean
 }
 
 const tasksSlice = createSlice({
@@ -19,7 +20,8 @@ const tasksSlice = createSlice({
 				title : 'New Task',
 				cardId : action.payload.cardId,
 				timeFlex : 1,
-				complete : false
+				complete : false,
+				running : false
 			}
 			state.push(task)
 		},
@@ -35,9 +37,16 @@ const tasksSlice = createSlice({
 		},
 		setComplete(state, action) {
 			state.find(task => task.id == action.payload.id)!.complete = action.payload.value
+		},
+		start(state, action) {
+			state.find(task => task.id == action.payload.id)!.running = true
+		},
+		finish(state, action) {
+			state.find(task => task.id == action.payload.id)!.running = false
+			state.find(task => task.id == action.payload.id)!.complete = true
 		}
 	}
 })
 
-export const { add, remove, setTitle, addToTimeFlex, setComplete } = tasksSlice.actions
+export const { add, remove, setTitle, addToTimeFlex, setComplete, start, finish } = tasksSlice.actions
 export default tasksSlice.reducer

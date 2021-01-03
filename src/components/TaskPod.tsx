@@ -27,7 +27,7 @@ const TaskPod : React.FC<Props> = (props) => {
 	const task = props.task
 	const onFinishedTask = props.onFinishedTask
 	const mode = useSelector((state : RootState) => state.mode.value)
-	const cardEndTime = new Date(useSelector((state : RootState) => state.cards.find(card => card.id == task.cardId))!.endTime)
+	const endTime = useSelector((state : RootState) => state.cards.find(card => card.id == task.cardId))!.endTime
 	const totalTimeFlex = useSelector((state : RootState) => state.tasks.filter(sister => sister.cardId == task.cardId)).map(task => task.timeFlex).reduce((a, b) => a + b)
 	const completion = useRef(new Animated.Value(0)).current
 	
@@ -72,8 +72,13 @@ const TaskPod : React.FC<Props> = (props) => {
 	
 	useEffect(() => {
 		if (task.running) {
-			const endTime = new Date().setHours(cardEndTime.getHours(), cardEndTime.getMinutes(), cardEndTime.getSeconds(), cardEndTime.getMilliseconds())
-			const duration = (endTime - Date.now()) * (task.timeFlex / totalTimeFlex)
+			const coiso = new Date().setHours(
+				endTime.hour,
+				endTime.minute,
+				0,
+				0
+			)
+			const duration = (coiso - Date.now()) * (task.timeFlex / totalTimeFlex)
 			console.log(duration)
 			start(duration)
 		}

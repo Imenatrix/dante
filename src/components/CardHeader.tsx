@@ -44,7 +44,8 @@ const CardHeader : React.FC<Props> = (props) => {
 		if (date != undefined) {
 			dispatch(setEndTime({
 				id : card.id,
-				date : date.getTime()
+				hour : date.getHours(),
+				minute : date.getMinutes(),
 			}))
 		}
 	}
@@ -71,7 +72,7 @@ const CardHeader : React.FC<Props> = (props) => {
 	return (
 		<View style={styles.container}>
 			{isTimePickerOpen &&
-				<TimePicker onChange={handleTimePickerChange} value={new Date(card.endTime)} mode='time'/>
+				<TimePicker onChange={handleTimePickerChange} value={new Date(new Date().setHours(card.endTime.hour, card.endTime.minute))} mode='time'/>
 			}
 			{mode === 'edit' ?
 				<Pressable onPress={() => setIsTimePickerOpen(true)} style={styles.btnEndTime}>
@@ -85,7 +86,7 @@ const CardHeader : React.FC<Props> = (props) => {
 					{card.title}
 				</TextInput>
 				<Text style={styles.txtEndTime}>
-					Ends at: {new Date(card.endTime).toLocaleTimeString().slice(0, -3)}
+					Ends at: {card.endTime.toString()}
 				</Text>
 			</View>
 			{mode === 'edit' ? 

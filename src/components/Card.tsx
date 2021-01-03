@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
 	ScrollView,
 	StyleSheet,
@@ -14,6 +14,7 @@ import { Card as ICard } from 'src/reducers/cardsSlice'
 import { add } from 'src/reducers/tasksSlice'
 import CardHeader from 'src/components/CardHeader'
 import Icon from 'react-native-vector-icons/MaterialIcons'
+import CompletionWarning from 'src/components/CompletionWarning'
 
 interface Props {
 	card : ICard
@@ -24,14 +25,17 @@ const Card : React.FC<Props> = (props) => {
 	const dispatch = useDispatch()
 
 	const card = props.card
+	const [showModal, setShowModal] = useState(false)
 	const mode = useSelector((state : RootState) => state.mode.value)
 	const tasks = useSelector((state : RootState) => state.tasks).filter(task => task.cardId == card.id)
 	const taskPods = tasks.map((task, index) => (
 						<TaskPod color={index % 2 == 0 ? 'lightgray' : 'white'} key={task.id} task={task}/>
 					))
 
+	const currentTask = tasks[0]
 	return (
 		<View style={styles.container}>
+			<CompletionWarning task={currentTask} visible={showModal} onBtnPausePress={() => setShowModal(false)}/>
 			<CardHeader card={card}/>
 			{mode === 'edit' &&
 				<ScrollView style={styles.podDrawer}>
@@ -43,7 +47,7 @@ const Card : React.FC<Props> = (props) => {
 				<View style={styles.podDisplay}>
 					{taskPods}
 				</View>
-				<Pressable style={styles.btnGo}>
+				<Pressable style={styles.btnGo} onPress={() => setShowModal(true)}>
 					<Icon style={styles.iconBtnGo} name='play-arrow'/>
 				</Pressable>
 			</> }

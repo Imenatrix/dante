@@ -4,7 +4,8 @@ export interface Task {
 	id : number,
 	cardId : number,
 	title : string,
-	timeFlex : number
+	timeFlex : number,
+	complete : boolean
 }
 
 const tasksSlice = createSlice({
@@ -17,7 +18,8 @@ const tasksSlice = createSlice({
 				id : id,
 				title : 'New Task',
 				cardId : action.payload.cardId,
-				timeFlex : 1
+				timeFlex : 1,
+				complete : false
 			}
 			state.push(task)
 		},

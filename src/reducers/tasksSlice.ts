@@ -32,6 +32,9 @@ const tasksSlice = createSlice({
 		},
 		addToTimeFlex(state, action) {
 			state.find(task => task.id == action.payload.id)!.timeFlex += action.payload.ammount
+		},
+		setComplete(state, action) {
+			state.find(task => task.id == action.payload.id)!.complete = action.payload.value
 		}
 	}
 })

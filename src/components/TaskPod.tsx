@@ -79,12 +79,17 @@ const TaskPod : React.FC<Props> = (props) => {
 	
 	useEffect(() => {
 		if (task.running) {
-			const coiso = new Date().setHours(
+			let coiso = new Date().setHours(
 				endTime.hour,
 				endTime.minute,
 				0,
 				0
 			)
+			if (coiso - Date.now() <= 0) {
+				const coisoDate = new Date(coiso)
+				coisoDate.setDate(coisoDate.getDate() + 1)
+				coiso = coisoDate.getTime()
+			}
 			const duration = (coiso - Date.now()) * (task.timeFlex / totalTimeFlex)
 			console.log(duration)
 			start(duration)

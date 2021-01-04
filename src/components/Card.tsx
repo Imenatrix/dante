@@ -35,6 +35,12 @@ const Card : React.FC<Props> = (props) => {
 	const nextTask = tasks.filter(task => !task.complete)[0]
 	const [lastFinishedTask, setLastFinishedTask] = useState<Task>()
 
+	useEffect(() => {
+		if (!nextTask.running) {
+			setRunning(false)
+		}
+	}, [nextTask.running])
+
 	function onFinishedTask(task : Task) {
 		setShowModal(true)
 		setLastFinishedTask(task)

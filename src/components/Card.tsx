@@ -11,7 +11,7 @@ import { RootState } from 'src/reducers'
 import TaskPod from 'src/components/TaskPod'
 import NewPod from 'src/components/NewPod'
 import { Card as ICard } from 'src/reducers/cardsSlice'
-import { add, start, Task } from 'src/reducers/tasksSlice'
+import { add, pause, start, Task } from 'src/reducers/tasksSlice'
 import CardHeader from 'src/components/CardHeader'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import CompletionWarning from 'src/components/CompletionWarning'
@@ -26,6 +26,7 @@ const Card : React.FC<Props> = (props) => {
 
 	const card = props.card
 	const [showModal, setShowModal] = useState(false)
+	const [running, setRunning] = useState(false)
 	const mode = useSelector((state : RootState) => state.mode.value)
 	const tasks = useSelector((state : RootState) => state.tasks).filter(task => task.cardId == card.id)
 	const taskPods = tasks.map((task, index) => (
@@ -37,11 +38,13 @@ const Card : React.FC<Props> = (props) => {
 	function onFinishedTask(task : Task) {
 		setShowModal(true)
 		setLastFinishedTask(task)
+		setRunning(false)
 	}
 
 	function modalContinue() {
 		onBtnGoPress()
 		setShowModal(false)
+		setRunning(true)
 	}
 	
 	function modalPause() {
@@ -54,6 +57,16 @@ const Card : React.FC<Props> = (props) => {
 				id : nextTask.id
 			}))
 		}
+		setRunning(true)
+	}
+	
+	function onBtnPausePress() {
+		if (nextTask != undefined) {
+			dispatch(pause({
+				id : nextTask.id
+			}))
+		}
+		setRunning(false)
 	}
 
 	return (
@@ -70,8 +83,8 @@ const Card : React.FC<Props> = (props) => {
 				<View style={styles.podDisplay}>
 					{taskPods}
 				</View>
-				<Pressable style={styles.btnGo} onPress={onBtnGoPress}>
-					<Icon style={styles.iconBtnGo} name='play-arrow'/>
+				<Pressable style={styles.btnGo} onPress={running ? onBtnPausePress : onBtnGoPress}>
+						<Icon style={styles.iconBtnGo} name={running ? 'pause' : 'play-arrow'}/>
 				</Pressable>
 			</> }
 		</View>

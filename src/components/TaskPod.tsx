@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import {
 	View,
 	TextInput,
@@ -29,7 +29,7 @@ const TaskPod : React.FC<Props> = (props) => {
 	const mode = useSelector((state : RootState) => state.mode.value)
 	const endTime = useSelector((state : RootState) => state.cards.find(card => card.id == task.cardId))!.endTime
 	const totalTimeFlex = useSelector((state : RootState) => state.tasks.filter(sister => sister.cardId == task.cardId && !sister.complete)).map(task => task.timeFlex).reduce((a, b) => a + b, 0)
-	const completion = useRef(new Animated.Value(0)).current
+	const completion = useRef(new Animated.Value(task.elapsedTime)).current
 	
 	function handleTxtTileChange(event : NativeSyntheticEvent<TextInputChangeEventData>) {
 		dispatch(setTitle({
@@ -58,12 +58,12 @@ const TaskPod : React.FC<Props> = (props) => {
 			}
 		});
 	}
-	
+
 	useEffect(() => {
-		if (!task.running && !task.complete) {
+		if (task.elapsedTime == 0) {
 			completion.setValue(0)
 		}
-	}, [task.running, task.complete])
+	}, [task.elapsedTime])
 	
 	useEffect(() => {
 		completion.addListener(() => {
@@ -75,7 +75,7 @@ const TaskPod : React.FC<Props> = (props) => {
 		return () => {
 			completion.removeAllListeners()
 		}
-	}, [])
+	})
 	
 	useEffect(() => {
 		if (task.running) {
@@ -90,9 +90,11 @@ const TaskPod : React.FC<Props> = (props) => {
 				coisoDate.setDate(coisoDate.getDate() + 1)
 				coiso = coisoDate.getTime()
 			}
-			const duration = (coiso - Date.now()) * (task.timeFlex / totalTimeFlex)
-			console.log(duration)
+			const duration = (coiso - Date.now()) * (task.timeFlex / totalTimeFlex) * (1 - task.elapsedTime)
 			start(duration)
+		}
+		else {
+			completion.setValue(task.elapsedTime)
 		}
 	}, [task.running])
 
@@ -101,7 +103,7 @@ const TaskPod : React.FC<Props> = (props) => {
 			{mode === 'go' &&
 				<>
 					<View style={styles.completionMeterContainer}>
-						<Animated.View style={[styles.completionTimer, {flex : task.complete ? 1 : completion}]}/>
+						<Animated.View style={[styles.completionTimer, {flex : completion}]}/>
 					</View>
 					<Text style={styles.txtTitle} adjustsFontSizeToFit>{task.title}</Text>
 				</>

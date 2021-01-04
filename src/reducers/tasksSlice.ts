@@ -58,6 +58,7 @@ const tasksSlice = createSlice({
 
 		},
 		setElapsedTime(state, action) {
+			console.log(action.payload.value)
 			state.find(task => task.id == action.payload.id)!.elapsedTime = action.payload.value
 		}
 	}

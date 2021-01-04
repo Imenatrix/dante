@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.12.1",
+    "@react-native-community/audio-toolkit": "^2.0.3",
     "@react-native-community/datetimepicker": "^3.0.8",
     "@reduxjs/toolkit": "^1.5.0",
     "@sayem314/react-native-keep-awake": "^1.0.4",

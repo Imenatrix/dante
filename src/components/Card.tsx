@@ -58,9 +58,7 @@ const Card : React.FC<Props> = (props) => {
 
 	return (
 		<View style={styles.container}>
-			{lastFinishedTask != undefined &&
-				<CompletionWarning visible={showModal} task={lastFinishedTask} onBtnContinuePress={modalContinue} onBtnPausePress={modalPause}/>
-			}
+			<CompletionWarning visible={showModal} task={lastFinishedTask} onBtnContinuePress={modalContinue} onBtnPausePress={modalPause}/>
 			<CardHeader card={card}/>
 			{mode === 'edit' &&
 				<ScrollView style={styles.podDrawer}>

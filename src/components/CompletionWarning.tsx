@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import {
     View,
     Text,
@@ -8,21 +8,36 @@ import {
     GestureResponderEvent
 } from 'react-native'
 import { Task } from 'src/reducers/tasksSlice'
+import { Player } from '@react-native-community/audio-toolkit'
 
 interface Props {
-    task : Task,
+    task? : Task,
     visible : boolean,
     onBtnContinuePress? : (event : GestureResponderEvent) => void,
     onBtnPausePress? : (event : GestureResponderEvent) => void
 }
 
+
 const CompletionWarning : React.FC<Props> = (props) => {
+    
+    useEffect(() => {
+        let alarm : Player | undefined
+        if (props.visible) {
+            alarm = new Player('alarm.mp3')
+            alarm.looping = true
+            alarm.play()
+        }
+        return () => {
+            alarm?.destroy()
+        }
+    }, [props.visible])
+
     return (
         <Modal animationType='fade' visible={props.visible} transparent>
             <View style={styles.background}/>
             <View style={styles.container}>
                 <View/>
-                    <Text style={styles.txt}>{props.task.title}</Text>
+                    <Text style={styles.txt}>{props.task?.title}</Text>
                 <View style={styles.buttonGroup}>
                     <Pressable style={styles.btnContinue} onPress={props.onBtnContinuePress}>
                         <Text>Start next task</Text>

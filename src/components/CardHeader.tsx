@@ -76,12 +76,14 @@ const CardHeader : React.FC<Props> = (props) => {
 			{isTimePickerOpen &&
 				<TimePicker onChange={handleTimePickerChange} value={new Date(new Date().setHours(card.endTime.hour, card.endTime.minute))} mode='time'/>
 			}
-			{mode === 'edit' ?
+			{mode === 'edit' ? 
 				<Pressable onPress={() => setIsTimePickerOpen(true)} style={styles.btnEndTime}>
 					<Icon style={styles.iconBtnEndTime} name='schedule'/>
 				</Pressable>
 			:
-				<View style={{width : 50}}/>
+				<Pressable onPress={resetTasks} style={styles.btnEndTime}>
+					<Icon style={styles.iconBtnEndTime} name='refresh'/>
+				</Pressable>
 			}
 			<View style={styles.headerText}>
 				<TextInput editable={mode === 'edit'} onChange={handleTxtTitleChange} style={styles.txtTitle}>
@@ -91,14 +93,12 @@ const CardHeader : React.FC<Props> = (props) => {
 					Ends at: {stringfy(card.endTime)}
 				</Text>
 			</View>
-			{mode === 'edit' ? 
+			{mode === 'edit' ?
 				<Pressable onPress={onBtnRemovePress} style={styles.btnEndTime}>
 					<Icon style={styles.iconBtnEndTime} name='close'/>
 				</Pressable>
 			:
-				<Pressable onPress={resetTasks} style={styles.btnEndTime}>
-					<Icon style={styles.iconBtnEndTime} name='refresh'/>
-				</Pressable>
+				<View style={{width : 50}}/>
 			}
 		</View>
 	)

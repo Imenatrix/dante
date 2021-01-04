@@ -74,22 +74,27 @@ const CardBoxHeader : React.FC<Props> = (props) => {
 	
 	return (
 		<View style={styles.container}>
-			{mode === 'edit' &&
-				<Pressable onPress={onBtnRemovePress} style={styles.btn}>
-					<Icon name='close' style={styles.icon}/>
-				</Pressable>
-			}
-			{mode === 'go' &&
+			{mode === 'go' ?
 				<Pressable style={styles.btnMenu} onPress={props.onBtnSideMenuPress}>
 					<Icon style={styles.iconBtnMenu} name='menu'/>
+				</Pressable>
+			:
+				<Pressable onPress={toggleEdit} style={styles.btn}>
+					<Icon style={styles.icon} name={icons.get(mode)!}/>
 				</Pressable>
 			}
 			<TextInput editable={mode === 'edit'} onChange={handleTxtTitleChange} style={styles.txtTitle}>
 				{cardBox.title}
 			</TextInput>
-			<Pressable onPress={toggleEdit} style={styles.btn}>
-				<Icon style={styles.icon} name={icons.get(mode)!}/>
-			</Pressable>
+			{mode === 'go' ?
+				<Pressable onPress={toggleEdit} style={styles.btn}>
+					<Icon style={styles.icon} name={icons.get(mode)!}/>
+				</Pressable>
+			:
+				<Pressable onPress={onBtnRemovePress} style={styles.btn}>
+					<Icon name='close' style={styles.icon}/>
+				</Pressable>
+			}
 		</View>
 	)
 }

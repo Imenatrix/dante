@@ -36,10 +36,10 @@ const Card : React.FC<Props> = (props) => {
 	const [lastFinishedTask, setLastFinishedTask] = useState<Task>()
 
 	useEffect(() => {
-		if (!nextTask.running) {
+		if (nextTask == undefined || !nextTask?.running) {
 			setRunning(false)
 		}
-	}, [nextTask.running])
+	}, [nextTask?.running])
 
 	function onFinishedTask(task : Task) {
 		setShowModal(true)
@@ -50,7 +50,6 @@ const Card : React.FC<Props> = (props) => {
 	function modalContinue() {
 		onBtnGoPress()
 		setShowModal(false)
-		setRunning(true)
 	}
 	
 	function modalPause() {
@@ -62,8 +61,8 @@ const Card : React.FC<Props> = (props) => {
 			dispatch(start({
 				id : nextTask.id
 			}))
+			setRunning(true)
 		}
-		setRunning(true)
 	}
 	
 	function onBtnPausePress() {

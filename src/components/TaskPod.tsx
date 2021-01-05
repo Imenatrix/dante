@@ -28,7 +28,7 @@ const TaskPod : React.FC<Props> = (props) => {
 	const onFinishedTask = props.onFinishedTask
 	const mode = useSelector((state : RootState) => state.mode.value)
 	const endTime = useSelector((state : RootState) => state.cards.find(card => card.id == task.cardId))!.endTime
-	const totalTimeFlex = useSelector((state : RootState) => state.tasks.filter(sister => sister.cardId == task.cardId && !sister.complete)).map(task => task.timeFlex).reduce((a, b) => a + b, 0)
+	const totalTimeFlex = useSelector((state : RootState) => state.tasks.filter(sister => sister.cardId == task.cardId && !sister.complete)).map(sister => sister.timeFlex * (1 - sister.elapsedTime)).reduce((a, b) => a + b, 0)
 	const completion = useRef(new Animated.Value(task.elapsedTime)).current
 	
 	function handleTxtTileChange(event : NativeSyntheticEvent<TextInputChangeEventData>) {
@@ -90,7 +90,7 @@ const TaskPod : React.FC<Props> = (props) => {
 				coisoDate.setDate(coisoDate.getDate() + 1)
 				coiso = coisoDate.getTime()
 			}
-			const duration = (coiso - Date.now()) * (task.timeFlex / totalTimeFlex) * (1 - task.elapsedTime)
+			const duration = (coiso - Date.now()) * (task.timeFlex * (1 - task.elapsedTime) / totalTimeFlex)
 			start(duration)
 		}
 		else {

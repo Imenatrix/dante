@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import {
 	View,
+	Alert,
 	Pressable,
 	TextInput,
 	StyleSheet,
@@ -71,6 +72,23 @@ const CardBoxHeader : React.FC<Props> = (props) => {
 			dispatch(go())
 		}
 	}
+
+	function showAlert() {
+		return Alert.alert(
+			'Warning!',
+			'Are you sure you want to delete this card box? This action cannot be undone',
+			[
+				{
+					text : 'No',
+				},
+				{
+					text : 'Yes',
+					onPress : onBtnRemovePress,
+				}
+			],
+			{cancelable : false}
+		)
+	}
 	
 	return (
 		<View style={styles.container}>
@@ -91,7 +109,7 @@ const CardBoxHeader : React.FC<Props> = (props) => {
 					<Icon style={styles.icon} name={icons.get(mode)!}/>
 				</Pressable>
 			:
-				<Pressable onPress={onBtnRemovePress} style={styles.btn}>
+				<Pressable onPress={showAlert} style={styles.btn}>
 					<Icon name='close' style={styles.icon}/>
 				</Pressable>
 			}

@@ -5,6 +5,7 @@ import {
 	StyleSheet,
 	GestureResponderEvent
 } from 'react-native'
+import DropShadow from 'react-native-drop-shadow'
 
 interface Props {
 	onPress : (event : GestureResponderEvent) => void
@@ -17,9 +18,11 @@ const CardBoxPod : React.FC<Props> = (props) => {
 	const onPress = props.onPress
 
 	return (
-		<Pressable onPress={onPress} style={styles.container}>
-			<Text style={styles.txtTitle}>{title}</Text>
-		</Pressable>
+		<DropShadow style={styles.shadow}>
+			<Pressable onPress={onPress} style={styles.container}>
+				<Text style={styles.txtTitle}>{title}</Text>
+			</Pressable>
+		</DropShadow>
 	)
 
 }
@@ -27,11 +30,16 @@ const CardBoxPod : React.FC<Props> = (props) => {
 export default CardBoxPod
 
 const styles = StyleSheet.create({
+	shadow : {
+		shadowColor : 'black',
+		shadowOpacity : 0.3,
+		shadowRadius : 1
+	},
 	container : {
 		height : 60,
 		margin : 5,
 		borderRadius : 5,
-		backgroundColor : 'lightgray',
+		backgroundColor : 'white',
 		justifyContent : 'center',
 		padding : 10
 	},

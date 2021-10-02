@@ -1,5 +1,6 @@
 import React from 'react'
 import { NativeSyntheticEvent, StyleSheet, TextInput, TextInputChangeEventData, View } from 'react-native'
+import DropShadow from 'react-native-drop-shadow'
 import { useDispatch } from 'react-redux'
 import { setTitle, Task } from 'src/reducers/tasksSlice'
 import Counter from './Counter'
@@ -22,21 +23,28 @@ const EditTaskPod : React.FC<Props> = (props) => {
 	}
 
     return (
-        <View style={styles.container}>
-            <TextInput onChange={handleTxtTileChange} style={styles.txtTitle}>{task.title}</TextInput>
-            <Counter task={task}/>
-        </View>
+        <DropShadow style={styles.shadow}>
+            <View style={styles.container}>
+                <TextInput onChange={handleTxtTileChange} style={styles.txtTitle}>{task.title}</TextInput>
+                <Counter task={task}/>
+            </View>
+        </DropShadow>
     )
 }
 
 export default EditTaskPod
 
 const styles = StyleSheet.create({
+    shadow : {
+        shadowColor : 'black',
+        shadowOpacity : 0.3,
+        shadowRadius : 1,
+    },
     container : {
         flexDirection : 'row',
 		alignItems : 'center',
 		justifyContent : 'space-between',
-		backgroundColor : 'gray',
+		backgroundColor : 'white',
         margin : 5,
         borderRadius : 5
     },

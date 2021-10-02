@@ -118,10 +118,10 @@ const styles = StyleSheet.create({
 	},
 	podDrawer : {
 		paddingVertical : 5,
-		backgroundColor : 'lightgray'
+		backgroundColor : 'white'
 	},
 	podDisplay : {
-		backgroundColor : 'lightgray',
+		backgroundColor : 'white',
 		flex : 1
 	},
 	btnGo : {

@@ -63,7 +63,7 @@ const Main : React.FC = () => {
 	const cardBox = cardBoxes.find(x => x.id == selectedCardBox)
 
 	return (
-		<View style={{flex : 1}}>
+		<View style={styles.container}>
 			{cardBox != undefined ? <>
 				<CardBoxHeader onBtnSideMenuPress={toggleMenu} cardBox={cardBox}/>
 				<CardBox cardBox={cardBox}/>
@@ -85,6 +85,10 @@ const Main : React.FC = () => {
 }
 
 const styles = StyleSheet.create({
+	container : {
+		flex : 1,
+		backgroundColor : 'white'
+	},
 	txtPlaceholder : {
 		color : 'gray',
 		textAlign : 'center',

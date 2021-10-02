@@ -15,6 +15,7 @@ import { add, pause, start, Task } from 'src/reducers/tasksSlice'
 import CardHeader from 'src/components/CardHeader'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import CompletionWarning from 'src/components/CompletionWarning'
+import DropShadow from 'react-native-drop-shadow'
 
 interface Props {
 	card : ICard
@@ -75,24 +76,26 @@ const Card : React.FC<Props> = (props) => {
 	}
 
 	return (
-		<View style={styles.container}>
-			<CompletionWarning visible={showModal} task={lastFinishedTask} onBtnContinuePress={modalContinue} onBtnPausePress={modalPause}/>
-			<CardHeader card={card}/>
-			{mode === 'edit' &&
-				<ScrollView style={styles.podDrawer}>
-					{taskPods}
-					<NewPod onPress={() => dispatch(add({cardId : card.id}))}/>
-				</ScrollView>
-			}
-			{mode === 'go' && <>
-				<View style={styles.podDisplay}>
-					{taskPods}
-				</View>
-				<Pressable style={styles.btnGo} onPress={running ? onBtnPausePress : onBtnGoPress}>
-						<Icon style={styles.iconBtnGo} name={running ? 'pause' : 'play-arrow'}/>
-				</Pressable>
-			</> }
-		</View>
+		<DropShadow style={styles.shadow}>
+			<View style={styles.container}>
+				<CompletionWarning visible={showModal} task={lastFinishedTask} onBtnContinuePress={modalContinue} onBtnPausePress={modalPause}/>
+				<CardHeader card={card}/>
+				{mode === 'edit' &&
+					<ScrollView style={styles.podDrawer}>
+						{taskPods}
+						<NewPod onPress={() => dispatch(add({cardId : card.id}))}/>
+					</ScrollView>
+				}
+				{mode === 'go' && <>
+					<View style={styles.podDisplay}>
+						{taskPods}
+					</View>
+					<Pressable style={styles.btnGo} onPress={running ? onBtnPausePress : onBtnGoPress}>
+							<Icon style={styles.iconBtnGo} name={running ? 'pause' : 'play-arrow'}/>
+					</Pressable>
+				</> }
+			</View>
+		</DropShadow>
 	)
 
 }
@@ -100,6 +103,11 @@ const Card : React.FC<Props> = (props) => {
 export default Card
 
 const styles = StyleSheet.create({
+	shadow : {
+		shadowColor: 'black',
+		shadowOpacity: 0.5,
+		shadowRadius: 5,
+	},
 	container : {
 		flex : 1,
 		width : Dimensions.get('window').width - 40,

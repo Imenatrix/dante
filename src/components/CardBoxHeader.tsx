@@ -139,9 +139,10 @@ const styles = StyleSheet.create({
 		width : 50,
 		height : 50,
 		justifyContent : 'center',
+		alignItems : 'center'
 	},
 	icon : {
-		fontSize : 30
+		fontSize : 25
 	},
 	iconBtnMenu : {
 		fontSize : 50,

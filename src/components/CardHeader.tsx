@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
 		alignItems : 'center'
 	},
 	iconBtnEndTime : {
-		fontSize : 35
+		fontSize : 25
 	},
 	headerText : {
 		flex : 1,

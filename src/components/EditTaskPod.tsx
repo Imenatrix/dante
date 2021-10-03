@@ -46,7 +46,8 @@ const styles = StyleSheet.create({
 		justifyContent : 'space-between',
 		backgroundColor : 'white',
         margin : 5,
-        borderRadius : 5
+        borderRadius : 5,
+        padding : 5
     },
     txtTitle : {
 		fontSize : 20,

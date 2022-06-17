@@ -70,7 +70,7 @@ const SideMenu : React.FC<Props> = (props) => {
 	const onBackgroundPress = props.onBackgroundPress
 
 	return (
-		<View style={styles.container}>
+		<View style={styles.container} pointerEvents={props.open ? 'auto' : 'none'}>
 			<Animated.View style={[styles.background, {opacity : backgroundOpacity}]}>
 				<Pressable onPress={onBackgroundPress} style={styles.backgroundPressable}/>
 			</Animated.View>
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
 		position : 'absolute',
 		width : '100%',
 		height : '100%',
-		flexDirection : 'row'
+		flexDirection : 'row',
 	},
 	body : {
 		position : 'absolute',

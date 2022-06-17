@@ -11,6 +11,7 @@ import { CardBox as ICardBox } from 'src/reducers/cardBoxesSlice'
 import { add } from 'src/reducers/cardsSlice'
 import Card from 'src/components/Card'
 import NewCard from 'src/components/NewCard'
+import colors from 'src/styles/colors'
 
 interface Props {
 	cardBox : ICardBox
@@ -53,7 +54,7 @@ const styles = StyleSheet.create({
 	header : {
 		flexDirection : 'row',
 		alignItems : 'center',
-		backgroundColor : 'gray',
+		backgroundColor : colors.primary,
 		justifyContent : 'space-between',
 		padding : 5
 	},
@@ -64,7 +65,7 @@ const styles = StyleSheet.create({
 		fontSize : 40
 	},
 	btnConfirm : {
-		backgroundColor : 'green',
+		backgroundColor : colors.accent,
 		borderRadius : 99999
 	},
 	iconBtnConfirm : {

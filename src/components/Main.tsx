@@ -22,6 +22,7 @@ import CardBoxHeader from 'src/components/CardBoxHeader'
 import CardBox from 'src/components/CardBox'
 import CardBoxPodDrawer from 'src/components/CardBoxPodDrawer'
 import AppHeader from 'src/components/AppHeader'
+import colors from 'src/styles/colors'
 
 
 const Main : React.FC = () => {
@@ -87,7 +88,7 @@ const Main : React.FC = () => {
 const styles = StyleSheet.create({
 	container : {
 		flex : 1,
-		backgroundColor : 'white'
+		backgroundColor : colors.background
 	},
 	txtPlaceholder : {
 		color : 'gray',

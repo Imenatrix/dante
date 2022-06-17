@@ -9,6 +9,7 @@ import {
 } from 'react-native'
 import { Task } from 'src/reducers/tasksSlice'
 import { Player } from '@react-native-community/audio-toolkit'
+import colors from 'src/styles/colors'
 
 interface Props {
     task? : Task,
@@ -66,7 +67,7 @@ const styles = StyleSheet.create({
         flex : 1,
         marginHorizontal : 50,
         marginVertical : 200,
-        backgroundColor : 'white',
+        backgroundColor : colors.background,
         borderRadius : 5,
         justifyContent : 'space-between',
         padding : 5
@@ -89,7 +90,7 @@ const styles = StyleSheet.create({
     btnContinue : {
         height : 50,
         flex : 1,
-        backgroundColor : 'green',
+        backgroundColor : colors.accent,
         borderRadius : 5,
         justifyContent : 'center',
         alignItems : 'center'

@@ -8,6 +8,7 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import { useDispatch } from 'react-redux'
 import { remove, addToTimeFlex, Task } from 'src/reducers/tasksSlice'
+import colors from 'src/styles/colors'
 
 interface Props {
 	task : Task
@@ -65,7 +66,7 @@ const styles = StyleSheet.create({
 	btn : {
 		width : 50,
 		height : 50,
-		backgroundColor : 'green',
+		backgroundColor : colors.accent,
 		borderRadius : 25,
 		justifyContent : 'center',
 		alignItems : 'center'

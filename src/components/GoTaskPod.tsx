@@ -3,6 +3,7 @@ import { Animated, Easing, StyleSheet, Text, View } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from 'src/reducers'
 import { finish, pause, setElapsedTime, Task } from 'src/reducers/tasksSlice'
+import colors from 'src/styles/colors'
 
 interface Props {
     task : Task
@@ -99,7 +100,7 @@ const styles = StyleSheet.create({
         flexDirection : 'row',
 		alignItems : 'center',
 		justifyContent : 'space-between',
-		backgroundColor : 'gray',
+		backgroundColor : colors.primary,
     },
     txtTitle : {
 		fontSize : 20,

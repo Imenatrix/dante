@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from 'src/reducers'
 import { Card, remove as removeCard, setTitle, setEndTime } from 'src/reducers/cardsSlice'
 import { remove as removeTask, reset} from 'src/reducers/tasksSlice'
+import colors from 'src/styles/colors'
 
 interface Props {
 	card : Card
@@ -111,12 +112,12 @@ const styles = StyleSheet.create({
 		flexDirection : 'row',
 		alignItems : 'center',
 		padding : 10,
-		backgroundColor : 'gray'
+		backgroundColor : colors.primary
 	},
 	btnEndTime : {
 		width : 50,
 		height : 50,
-		backgroundColor : 'green',
+		backgroundColor : colors.accent,
 		borderRadius : 25,
 		justifyContent : 'center',
 		alignItems : 'center'

@@ -16,6 +16,7 @@ import { remove as removeCardBox, setTitle, CardBox } from 'src/reducers/cardBox
 import { remove as removeCard } from 'src/reducers/cardsSlice'
 import { remove as removeTask } from 'src/reducers/tasksSlice'
 import { go, edit } from 'src/reducers/modeSlice'
+import colors from 'src/styles/colors'
 
 const icons = new Map([
 	['go', 'edit'],
@@ -123,7 +124,7 @@ const styles = StyleSheet.create({
 	container : {
 		flexDirection : 'row',
 		alignItems : 'center',
-		backgroundColor : 'gray',
+		backgroundColor : colors.primary,
 		justifyContent : 'space-between',
 		padding : 10,
 	},
@@ -131,7 +132,7 @@ const styles = StyleSheet.create({
 		width : 50,
 		height : 50,
 		borderRadius : 25,
-		backgroundColor : 'green',
+		backgroundColor : colors.accent,
 		justifyContent : 'center',
 		alignItems : 'center'
 	},

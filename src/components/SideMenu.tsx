@@ -8,6 +8,7 @@ import {
 	Dimensions,
 	Easing
 } from 'react-native'
+import colors from 'src/styles/colors'
 
 interface Props {
 	open? : boolean
@@ -95,7 +96,7 @@ const styles = StyleSheet.create({
 		position : 'absolute',
 		width : '75%',
 		height : '100%',
-		backgroundColor : 'white'
+		backgroundColor : colors.background
 	},
 	background : {
 		flex : 1,

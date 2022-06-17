@@ -16,6 +16,7 @@ import CardHeader from 'src/components/CardHeader'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import CompletionWarning from 'src/components/CompletionWarning'
 import DropShadow from 'react-native-drop-shadow'
+import colors from 'src/styles/colors'
 
 interface Props {
 	card : ICard
@@ -118,15 +119,15 @@ const styles = StyleSheet.create({
 	},
 	podDrawer : {
 		paddingVertical : 5,
-		backgroundColor : 'white'
+		backgroundColor : colors.background
 	},
 	podDisplay : {
-		backgroundColor : 'white',
+		backgroundColor : colors.background,
 		flex : 1
 	},
 	btnGo : {
 		height : 60,
-		backgroundColor : 'green',
+		backgroundColor : colors.accent,
 		justifyContent : 'center',
 		alignItems : 'center'
 	},

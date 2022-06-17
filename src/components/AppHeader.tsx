@@ -7,6 +7,7 @@ import {
 	GestureResponderEvent
 } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
+import colors from 'src/styles/colors'
 
 interface Props {
 	onBtnSideMenuPress : (event : GestureResponderEvent) => void
@@ -29,7 +30,7 @@ const styles = StyleSheet.create({
 	container : {
 		flexDirection : 'row',
 		alignItems : 'center',
-		backgroundColor : 'gray',
+		backgroundColor : colors.primary,
 		padding : 10,
 	},
 	btn : {

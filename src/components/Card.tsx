@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
 	shadow : {
 		shadowColor: 'black',
 		shadowOpacity: 0.5,
-		shadowRadius: 5,
+		shadowRadius: 3,
 	},
 	container : {
 		flex : 1,

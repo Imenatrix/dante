@@ -27,10 +27,8 @@ const SideMenu : React.FC<Props> = (props) => {
 	const width = Dimensions.get('window').width
 	const backgroundOpacity = useRef(props.open ? new Animated.Value(0.4) : new Animated.Value(0)).current
 	const bodyX = useRef(props.open ? new Animated.Value(0) : new Animated.Value(-(width * 3) / 4)).current
-	const [isOpen, setOpen] = useState(props.open != undefined ? props.open : false)
 
 	function open() {
-		setOpen(true)
 		Animated.timing(bodyX, {
 			toValue : 0,
 			duration : 500,
@@ -57,7 +55,7 @@ const SideMenu : React.FC<Props> = (props) => {
 			duration : 500,
 			useNativeDriver : true,
 			easing : Easing.out(Easing.exp)
-		}).start(() => setOpen(false))
+		}).start()
 	}
 
 	useEffect(() => {
@@ -73,14 +71,12 @@ const SideMenu : React.FC<Props> = (props) => {
 
 	return (
 		<View style={styles.container}>
-			{isOpen && <>
-				<Animated.View style={[styles.background, {opacity : backgroundOpacity}]}>
-					<Pressable onPress={onBackgroundPress} style={styles.backgroundPressable}/>
-				</Animated.View>
-				<Animated.View style={[styles.body, {transform : [{translateX : bodyX}]}]}>
-					{props.children}
-				</Animated.View>
-			</>}
+			<Animated.View style={[styles.background, {opacity : backgroundOpacity}]}>
+				<Pressable onPress={onBackgroundPress} style={styles.backgroundPressable}/>
+			</Animated.View>
+			<Animated.View style={[styles.body, {transform : [{translateX : bodyX}]}]}>
+				{props.children}
+			</Animated.View>
 		</View>
 	)
 
